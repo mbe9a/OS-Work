@@ -1,0 +1,46 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{c+c1}{// Michael Eller mbe9a}
+\PYGdefault{c+c1}{// OS Machine Problem 4}
+\PYGdefault{c+c1}{// 29 November 2016}
+\PYGdefault{c+c1}{// ftp.h (includes, defs, and protos)}
+
+\PYGdefault{c+cp}{\PYGdefaultZsh{}ifndef FTP\PYGdefaultZus{}H}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define FTP\PYGdefaultZus{}H}
+
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC125	\PYGdefaultZdq{}125 Data connection already open; transfer starting.\PYGdefaultZbs{}n\PYGdefaultZdq{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC125LEN	53}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC150	\PYGdefaultZdq{}150 File status okay; about to open data connection.\PYGdefaultZbs{}n\PYGdefaultZdq{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC150LEN	53}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC200	\PYGdefaultZdq{}200 The requested action has been successfully completed.\PYGdefaultZbs{}n\PYGdefaultZdq{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC200LEN	58}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC220	\PYGdefaultZdq{}220 Service ready for new user.\PYGdefaultZbs{}n\PYGdefaultZdq{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC220LEN	32}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC221	\PYGdefaultZdq{}221 Service closing control connection.\PYGdefaultZbs{}n\PYGdefaultZdq{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC221LEN	40}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC226	\PYGdefaultZdq{}226 Closing data connection. Requested file action successful (for example, file transfer or file abort).\PYGdefaultZbs{}n\PYGdefaultZdq{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC226LEN	106}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC451	\PYGdefaultZdq{}451 Requested action aborted. Local error in processing.\PYGdefaultZbs{}n\PYGdefaultZdq{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC451LEN	57}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC504	\PYGdefaultZdq{}504 Command not implemented for that parameter.\PYGdefaultZbs{}n\PYGdefaultZdq{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SRC504LEN	48}
+
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}sys/socket.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}sys/types.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}netinet/in.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}arpa/inet.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}unistd.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}fcntl.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}stdio.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}stdlib.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}iostream\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}fstream\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}sstream\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}string.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}list\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}errno.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}dirent.h\PYGdefaultZgt{}}
+
+\PYGdefault{k}{using} \PYGdefault{k}{namespace} \PYGdefault{n}{std}\PYGdefault{p}{;}
+
+\PYGdefault{c+cp}{\PYGdefaultZsh{}endif}
+\end{Verbatim}

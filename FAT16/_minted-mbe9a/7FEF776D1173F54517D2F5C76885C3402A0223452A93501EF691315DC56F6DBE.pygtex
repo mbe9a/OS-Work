@@ -1,0 +1,41 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{c+c1}{// function to return the offset of the first data sector of a given cluster}
+\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n+nf}{first\PYGdefaultZus{}sector\PYGdefaultZus{}of\PYGdefaultZus{}cluster}\PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{cluster}\PYGdefault{p}{,} \PYGdefault{k+kt}{bool} \PYGdefault{n}{file}\PYGdefault{p}{)}
+\PYGdefault{p}{\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// don\PYGdefaultZsq{}t calculate if the user is in the root directory}
+	\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{root} \PYGdefault{o}{\PYGdefaultZam{}\PYGdefaultZam{}} \PYGdefault{o}{!}\PYGdefault{n}{file}\PYGdefault{p}{)} \PYGdefault{k}{return} \PYGdefault{n}{first\PYGdefaultZus{}root\PYGdefaultZus{}dir\PYGdefaultZus{}sector}\PYGdefault{p}{;}
+	\PYGdefault{c+c1}{// else calculate from the given cluster}
+	\PYGdefault{k}{return} \PYGdefault{p}{((}\PYGdefault{n}{cluster} \PYGdefault{o}{\PYGdefaultZhy{}} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{)} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sectors\PYGdefaultZus{}per\PYGdefaultZus{}cluster}\PYGdefault{p}{)} \PYGdefault{o}{+} \PYGdefault{n}{first\PYGdefaultZus{}data\PYGdefaultZus{}sector}\PYGdefault{p}{;}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+
+\PYGdefault{c+c1}{// helper function to get file/directory name}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{get\PYGdefaultZus{}filename}\PYGdefault{p}{(}\PYGdefault{k+kt}{char} \PYGdefault{n}{name}\PYGdefault{p}{[])}
+\PYGdefault{p}{\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// copy the filename into the char array}
+	\PYGdefault{n}{memcpy}\PYGdefault{p}{(}\PYGdefault{n}{name}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{filename}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{filename}\PYGdefault{p}{));}
+
+	\PYGdefault{c+c1}{// append the file extension if it\PYGdefaultZsq{}s not a directory}
+	\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{p}{(}\PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{attributes} \PYGdefault{o}{\PYGdefaultZam{}} \PYGdefault{n}{DIRECTORY}\PYGdefault{p}{))}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{filename}\PYGdefault{p}{);} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)} \PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{name}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{]} \PYGdefault{o}{==} \PYGdefault{l+s+sc}{\PYGdefaultZsq{} \PYGdefaultZsq{}}\PYGdefault{p}{)} \PYGdefault{c+c1}{//|| (i == sizeof(CURRENT.filename) \PYGdefaultZhy{} 1)}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{c+c1}{// if we are at the end of the filename, start appending at the next position}
+				\PYGdefault{c+c1}{//if ((i == sizeof(CURRENT.filename) \PYGdefaultZhy{} 1) \PYGdefaultZam{}\PYGdefaultZam{} (name[i] != \PYGdefaultZsq{} \PYGdefaultZsq{})) i++;}
+
+				\PYGdefault{c+c1}{// add the dot}
+				\PYGdefault{n}{name}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}.\PYGdefaultZsq{}}\PYGdefault{p}{;}
+
+				\PYGdefault{c+c1}{// add the rest of the extension}
+				\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{j} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{;} \PYGdefault{n}{j} \PYGdefault{o}{\PYGdefaultZlt{}=} \PYGdefault{l+m+mi}{3}\PYGdefault{p}{;} \PYGdefault{n}{j}\PYGdefault{o}{++}\PYGdefault{p}{)} \PYGdefault{n}{name}\PYGdefault{p}{[}\PYGdefault{n}{i} \PYGdefault{o}{+} \PYGdefault{n}{j}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{ext}\PYGdefault{p}{[}\PYGdefault{n}{j} \PYGdefault{o}{\PYGdefaultZhy{}} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{];}
+
+				\PYGdefault{c+c1}{// add the null terminator}
+				\PYGdefault{n}{name}\PYGdefault{p}{[}\PYGdefault{n}{i} \PYGdefault{o}{+} \PYGdefault{l+m+mi}{4}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}0\PYGdefaultZsq{}}\PYGdefault{p}{;}
+				\PYGdefault{k}{return}\PYGdefault{p}{;}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{c+c1}{// get rid of extra spaces in directory names}
+	\PYGdefault{k}{else} \PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{filename}\PYGdefault{p}{);} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)} \PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{name}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{]} \PYGdefault{o}{==} \PYGdefault{l+s+sc}{\PYGdefaultZsq{} \PYGdefaultZsq{}}\PYGdefault{p}{)} \PYGdefault{n}{name}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}0\PYGdefaultZsq{}}\PYGdefault{p}{;}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+\end{Verbatim}

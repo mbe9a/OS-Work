@@ -1,0 +1,18 @@
+total 1280
+drwxr-xr-x@ 5 michaeleller  staff     170 Feb 24  2016 _minted-p1meller
+-rw-r-----  1 michaeleller  staff       0 Sep  6 12:34 foo
+-rw-r--r--@ 1 michaeleller  staff     294 Sep  5 17:03 makefile
+-rw-r--r--@ 1 michaeleller  staff     127 Aug 26 11:28 makefile~
+-rwxr-xr-x@ 1 michaeleller  staff   64220 Sep  6 12:32 msh
+-rw-r--r--@ 1 michaeleller  staff     175 Sep  5 17:16 out
+-rw-r--r--@ 1 michaeleller  staff    1018 Feb 24  2016 p1meller.aux
+-rw-r--r--@ 1 michaeleller  staff   92594 Feb 24  2016 p1meller.log
+-rw-r--r--@ 1 michaeleller  staff       0 Feb 24  2016 p1meller.out
+-rw-r--r--@ 1 michaeleller  staff  147048 Feb 24  2016 p1meller.pdf
+-rw-r--r--@ 1 michaeleller  staff   46305 Feb 24  2016 p1meller.synctex.gz
+-rw-r--r--@ 1 michaeleller  staff   13312 Feb 23  2016 p1meller.tar
+-rw-r--r--@ 1 michaeleller  staff   16912 Feb 24  2016 p1meller.tex
+-rw-r--r--@ 1 michaeleller  staff      59 Feb 21  2016 scores
+-rw-r--r--@ 1 michaeleller  staff    8618 Sep  6 12:32 shell.cpp
+-rw-r--r--@ 1 michaeleller  staff     733 Feb 23  2016 shell.h
+-rw-r--r--@ 1 michaeleller  staff  221872 Sep  6 12:32 shell.o

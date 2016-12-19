@@ -1,0 +1,41 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{c+c1}{// change\PYGdefaultZus{}directory helper function}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{next\PYGdefaultZus{}entry}\PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{starting\PYGdefaultZus{}sector}\PYGdefault{p}{,} \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{offset}\PYGdefault{p}{)}
+\PYGdefault{p}{\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// load sector at given offset into CURRENT}
+	\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{p}{(}\PYGdefault{n}{starting\PYGdefaultZus{}sector} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{)} \PYGdefault{o}{+} \PYGdefault{p}{(}\PYGdefault{n}{offset} \PYGdefault{o}{*} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{Fat16Entry}\PYGdefault{p}{)),} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+	\PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{CURRENT}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{Fat16Entry}\PYGdefault{p}{));}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+
+\PYGdefault{c+c1}{// method to change the PWD string, another helper function for \PYGdefaultZsq{}cd\PYGdefaultZsq{}}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{update\PYGdefaultZus{}pwd}\PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{direction}\PYGdefault{p}{)}
+\PYGdefault{p}{\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// take one level off of PWD if the user did \PYGdefaultZsq{}cd ..\PYGdefaultZsq{}}
+	\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{direction} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{// used to index the PWD string from the end, for figuring out where to stop deleting}
+		\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{index} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;}
+
+		\PYGdefault{c+c1}{// get rid of all the end characters until first \PYGdefaultZsq{}/\PYGdefaultZsq{} is reached}
+		\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{n}{string}\PYGdefault{o}{::}\PYGdefault{n}{reverse\PYGdefaultZus{}iterator} \PYGdefault{n}{str\PYGdefaultZus{}riter} \PYGdefault{o}{=} \PYGdefault{n}{PWD}\PYGdefault{p}{.}\PYGdefault{n}{rbegin}\PYGdefault{p}{()} \PYGdefault{o}{+} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{;} \PYGdefault{n}{str\PYGdefaultZus{}riter} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{PWD}\PYGdefault{p}{.}\PYGdefault{n}{rend}\PYGdefault{p}{();} \PYGdefault{o}{++}\PYGdefault{n}{str\PYGdefaultZus{}riter}\PYGdefault{p}{)}
+		\PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{n}{index}\PYGdefault{o}{++}\PYGdefault{p}{;}
+			\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{str\PYGdefaultZus{}riter} \PYGdefault{o}{==} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}/\PYGdefaultZsq{}}\PYGdefault{p}{)} \PYGdefault{k}{break}\PYGdefault{p}{;}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{c+c1}{// delete the last directory}
+		\PYGdefault{n}{PWD} \PYGdefault{o}{=} \PYGdefault{n}{PWD}\PYGdefault{p}{.}\PYGdefault{n}{substr}\PYGdefault{p}{(}\PYGdefault{l+m+mi}{0}\PYGdefault{p}{,} \PYGdefault{n}{strlen}\PYGdefault{p}{(}\PYGdefault{n}{PWD}\PYGdefault{p}{.}\PYGdefault{n}{c\PYGdefaultZus{}str}\PYGdefault{p}{())} \PYGdefault{o}{\PYGdefaultZhy{}} \PYGdefault{n}{index}\PYGdefault{p}{);}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{c+c1}{// add name of the current directory to PWD}
+	\PYGdefault{k}{else}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{// get directory name}
+		\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{name} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{((}\PYGdefault{k+kt}{char}\PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{filename}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{} \PYGdefaultZdq{}}\PYGdefault{p}{);}
+
+		\PYGdefault{c+c1}{// append it to PWD}
+		\PYGdefault{n}{PWD} \PYGdefault{o}{+=} \PYGdefault{n}{name}\PYGdefault{p}{;}
+
+		\PYGdefault{c+c1}{// formatting}
+		\PYGdefault{n}{PWD} \PYGdefault{o}{+=} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}/\PYGdefaultZsq{}}\PYGdefault{p}{;}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+\end{Verbatim}

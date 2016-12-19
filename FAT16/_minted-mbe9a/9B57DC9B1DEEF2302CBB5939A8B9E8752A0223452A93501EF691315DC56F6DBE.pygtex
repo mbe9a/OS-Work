@@ -1,0 +1,51 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{c+c1}{// main function}
+\PYGdefault{k+kt}{int} \PYGdefault{n+nf}{main}\PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{argc}\PYGdefault{p}{,} \PYGdefault{k+kt}{char} \PYGdefault{o}{*}\PYGdefault{n}{argv}\PYGdefault{p}{[])}
+\PYGdefault{p}{\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// open the sample FAT16 volume}
+	\PYGdefault{n}{DISK} \PYGdefault{o}{=} \PYGdefault{n}{open}\PYGdefault{p}{(}\PYGdefault{n}{argv}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{],} \PYGdefault{n}{O\PYGdefaultZus{}RDWR}\PYGdefault{p}{);}
+
+	\PYGdefault{c+c1}{// read boot sector into struct}
+	\PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{BS}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{Fat16BootSector}\PYGdefault{p}{));}
+
+	\PYGdefault{c+c1}{// compute the size of the root directory}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{root\PYGdefaultZus{}dir\PYGdefaultZus{}sectors} \PYGdefault{o}{=} \PYGdefault{p}{((}\PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{root\PYGdefaultZus{}dir\PYGdefaultZus{}entries} \PYGdefault{o}{*} \PYGdefault{l+m+mi}{32}\PYGdefault{p}{)} \PYGdefault{o}{+} \PYGdefault{p}{(}\PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size} \PYGdefault{o}{\PYGdefaultZhy{}} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{))} \PYGdefault{o}{/} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// compute the offset of the first data sector}
+	\PYGdefault{n}{first\PYGdefaultZus{}data\PYGdefaultZus{}sector} \PYGdefault{o}{=} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{reserved\PYGdefaultZus{}sectors} \PYGdefault{o}{+}
+		\PYGdefault{p}{(}\PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{number\PYGdefaultZus{}of\PYGdefaultZus{}fats} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{fat\PYGdefaultZus{}size\PYGdefaultZus{}sectors}\PYGdefault{p}{)} \PYGdefault{o}{+} \PYGdefault{n}{root\PYGdefaultZus{}dir\PYGdefaultZus{}sectors}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// compute the offset of the first root directory sector}
+	\PYGdefault{n}{first\PYGdefaultZus{}root\PYGdefaultZus{}dir\PYGdefaultZus{}sector} \PYGdefault{o}{=} \PYGdefault{n}{first\PYGdefaultZus{}data\PYGdefaultZus{}sector} \PYGdefault{o}{\PYGdefaultZhy{}} \PYGdefault{n}{root\PYGdefaultZus{}dir\PYGdefaultZus{}sectors}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// set the current directory to the ROOT directory}
+	\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{n}{first\PYGdefaultZus{}root\PYGdefaultZus{}dir\PYGdefaultZus{}sector} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+	\PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{CURRENT}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{Fat16Entry}\PYGdefault{p}{));}
+
+	\PYGdefault{c+c1}{// put the root dir in path}
+	\PYGdefault{n}{PWD}\PYGdefault{p}{.}\PYGdefault{n}{append}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}/\PYGdefaultZdq{}}\PYGdefault{p}{);}
+
+	\PYGdefault{c+c1}{// char pointers to parse user input}
+	\PYGdefault{k+kt}{char} \PYGdefault{o}{*}\PYGdefault{n}{buf} \PYGdefault{o}{=} \PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{n}{malloc}\PYGdefault{p}{(}\PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{p}{)}\PYGdefault{o}{*}\PYGdefault{l+m+mi}{1024}\PYGdefault{p}{);}
+	\PYGdefault{k+kt}{char} \PYGdefault{o}{*}\PYGdefault{n}{token}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{char} \PYGdefault{o}{*}\PYGdefault{n}{src}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{char} \PYGdefault{o}{*}\PYGdefault{n}{dest}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// list to hold inputs for commands}
+	\PYGdefault{n}{list}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{n}{arguments}\PYGdefault{p}{;}
+
+	\PYGdefault{k}{while} \PYGdefault{p}{(}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{//root = true;}
+		\PYGdefault{n}{check\PYGdefaultZus{}and\PYGdefaultZus{}set\PYGdefaultZus{}root}\PYGdefault{p}{();}
+
+		\PYGdefault{c+c1}{// print the current directory}
+		\PYGdefault{n}{cout} \PYGdefault{o}{\PYGdefaultZlt{}\PYGdefaultZlt{}} \PYGdefault{l+s}{\PYGdefaultZdq{}:\PYGdefaultZdq{}} \PYGdefault{o}{\PYGdefaultZlt{}\PYGdefaultZlt{}} \PYGdefault{n}{PWD} \PYGdefault{o}{\PYGdefaultZlt{}\PYGdefaultZlt{}} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZgt{} \PYGdefaultZdq{}}\PYGdefault{p}{;}
+
+		\PYGdefault{c+c1}{// read input from stdin}
+		\PYGdefault{n}{fgets}\PYGdefault{p}{(}\PYGdefault{n}{buf}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{1024}\PYGdefault{p}{,} \PYGdefault{n}{stdin}\PYGdefault{p}{);}
+		\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{x} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned}\PYGdefault{p}{)}\PYGdefault{n}{x} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{strlen}\PYGdefault{p}{(}\PYGdefault{n}{buf}\PYGdefault{p}{);} \PYGdefault{n}{x}\PYGdefault{o}{++}\PYGdefault{p}{)} \PYGdefault{k}{if} \PYGdefault{p}{(} \PYGdefault{n}{buf}\PYGdefault{p}{[}\PYGdefault{n}{x}\PYGdefault{p}{]} \PYGdefault{o}{==} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}n\PYGdefaultZsq{}} \PYGdefault{o}{||} \PYGdefault{n}{buf}\PYGdefault{p}{[}\PYGdefault{n}{x}\PYGdefault{p}{]} \PYGdefault{o}{==} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}r\PYGdefaultZsq{}} \PYGdefault{p}{)} \PYGdefault{n}{buf}\PYGdefault{p}{[}\PYGdefault{n}{x}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}0\PYGdefaultZsq{}}\PYGdefault{p}{;}
+
+		\PYGdefault{c+c1}{// exit program in user inputs \PYGdefaultZsq{}exit\PYGdefaultZsq{}}
+		\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{buf}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}exit\PYGdefaultZdq{}}\PYGdefault{p}{))} \PYGdefault{k}{break}\PYGdefault{p}{;}
+\end{Verbatim}

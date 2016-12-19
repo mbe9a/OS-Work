@@ -1,0 +1,358 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZdq{}shell.h\PYGdefaultZdq{}}
+
+\PYGdefault{k+kt}{int} \PYGdefault{n}{length}\PYGdefault{p}{;}
+
+\PYGdefault{k+kt}{char} \PYGdefault{n}{validchars}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{65}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{p}{\PYGdefaultZob{}}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}A\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}a\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}B\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}b\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}C\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}c\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}D\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}E\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}e\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}F\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}f\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}G\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}g\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}H\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}h\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}I\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}i\PYGdefaultZsq{}}\PYGdefault{p}{,}
+\PYGdefault{l+s+sc}{\PYGdefaultZsq{}J\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}j\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}K\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}k\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}L\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}l\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}M\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}m\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}N\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}n\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}O\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}o\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}P\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}p\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}Q\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}q\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}R\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}r\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}S\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}s\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}T\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}t\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}U\PYGdefaultZsq{}}\PYGdefault{p}{,}
+\PYGdefault{l+s+sc}{\PYGdefaultZsq{}u\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}V\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}v\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}W\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}w\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}X\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}x\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}Y\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}y\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}Z\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}z\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}0\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}1\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}2\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}3\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}4\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}5\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}6\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}7\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}8\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}9\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZhy{}\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZus{}\PYGdefaultZsq{}}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}.\PYGdefaultZsq{}}\PYGdefault{p}{\PYGdefaultZcb{};}
+
+\PYGdefault{k+kt}{bool} \PYGdefault{n+nf}{word}\PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{str}\PYGdefault{p}{)\PYGdefaultZob{}}
+\PYGdefault{c+c1}{// check if char* is only made of validchars}
+	\PYGdefault{k+kt}{bool} \PYGdefault{n}{test} \PYGdefault{o}{=} \PYGdefault{n+nb}{false}\PYGdefault{p}{;}
+	\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{iter} \PYGdefault{o}{=} \PYGdefault{n}{str}\PYGdefault{p}{;} \PYGdefault{o}{*}\PYGdefault{n}{iter}\PYGdefault{p}{;} \PYGdefault{o}{++}\PYGdefault{n}{iter}\PYGdefault{p}{)\PYGdefaultZob{}}
+		\PYGdefault{k+kt}{int} \PYGdefault{n}{i}\PYGdefault{p}{;}
+		\PYGdefault{k}{for}\PYGdefault{p}{(}\PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{l+m+mi}{65}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)\PYGdefaultZob{}}
+			\PYGdefault{n}{test} \PYGdefault{o}{=} \PYGdefault{n+nb}{false}\PYGdefault{p}{;}
+			\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{iter} \PYGdefault{o}{==} \PYGdefault{n}{validchars}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{])\PYGdefaultZob{}}
+				\PYGdefault{n}{test} \PYGdefault{o}{=} \PYGdefault{n+nb}{true}\PYGdefault{p}{;}
+				\PYGdefault{k}{break}\PYGdefault{p}{;}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{test}\PYGdefault{p}{)\PYGdefaultZob{}}
+			\PYGdefault{k}{return} \PYGdefault{n+nb}{false}\PYGdefault{p}{;}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{k}{return} \PYGdefault{n+nb}{true}\PYGdefault{p}{;}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+
+\PYGdefault{k+kt}{int} \PYGdefault{n+nf}{lt\PYGdefaultZus{}gt}\PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{str}\PYGdefault{p}{)\PYGdefaultZob{}}
+\PYGdefault{c+c1}{// determine file redirections within token}
+	\PYGdefault{k+kt}{bool} \PYGdefault{n}{lt} \PYGdefault{o}{=} \PYGdefault{n+nb}{false}\PYGdefault{p}{;}
+	\PYGdefault{c+c1}{// for parsing \PYGdefaultZlt{} and \PYGdefaultZgt{} without spaces}
+	\PYGdefault{k+kt}{bool} \PYGdefault{n}{gt} \PYGdefault{o}{=} \PYGdefault{n+nb}{false}\PYGdefault{p}{;}
+	\PYGdefault{k}{for}\PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{iter} \PYGdefault{o}{=} \PYGdefault{n}{str}\PYGdefault{p}{;} \PYGdefault{o}{*}\PYGdefault{n}{iter}\PYGdefault{p}{;} \PYGdefault{o}{++}\PYGdefault{n}{iter}\PYGdefault{p}{)\PYGdefaultZob{}}
+		\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{iter} \PYGdefault{o}{==} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZgt{}\PYGdefaultZsq{}}\PYGdefault{p}{)\PYGdefaultZob{}}
+			\PYGdefault{n}{gt} \PYGdefault{o}{=} \PYGdefault{n+nb}{true}\PYGdefault{p}{;}
+		\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{iter} \PYGdefault{o}{==} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZlt{}\PYGdefaultZsq{}}\PYGdefault{p}{)} \PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{n}{lt} \PYGdefault{o}{=} \PYGdefault{n+nb}{true}\PYGdefault{p}{;}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{n}{lt} \PYGdefault{o}{\PYGdefaultZam{}\PYGdefaultZam{}} \PYGdefault{n}{gt}\PYGdefault{p}{)\PYGdefaultZob{}}
+		\PYGdefault{k}{return} \PYGdefault{l+m+mi}{3}\PYGdefault{p}{;}
+	\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{gt}\PYGdefault{p}{)\PYGdefaultZob{}}
+		\PYGdefault{k}{return} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{;}
+	\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{lt}\PYGdefault{p}{)} \PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{k}{return} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{;}
+	\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{k}{return} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{printNestedVector}\PYGdefault{p}{(}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{n}{vec}\PYGdefault{p}{)\PYGdefaultZob{}}
+	\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{o}{\PYGdefaultZgt{}::}\PYGdefault{n}{iterator} \PYGdefault{n}{it1}\PYGdefault{p}{;}
+	\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}::}\PYGdefault{n}{iterator} \PYGdefault{n}{it2}\PYGdefault{p}{;}
+	\PYGdefault{k}{for}\PYGdefault{p}{(}\PYGdefault{n}{it1} \PYGdefault{o}{=} \PYGdefault{n}{vec}\PYGdefault{p}{.}\PYGdefault{n}{begin}\PYGdefault{p}{();} \PYGdefault{n}{it1} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{vec}\PYGdefault{p}{.}\PYGdefault{n}{end}\PYGdefault{p}{();} \PYGdefault{n}{it1}\PYGdefault{o}{++}\PYGdefault{p}{)\PYGdefaultZob{}}
+		\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{n}{temp} \PYGdefault{o}{=} \PYGdefault{o}{*}\PYGdefault{n}{it1}\PYGdefault{p}{;}
+		\PYGdefault{k}{for}\PYGdefault{p}{(}\PYGdefault{n}{it2} \PYGdefault{o}{=} \PYGdefault{n}{temp}\PYGdefault{p}{.}\PYGdefault{n}{begin}\PYGdefault{p}{();} \PYGdefault{n}{it2} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{temp}\PYGdefault{p}{.}\PYGdefault{n}{end}\PYGdefault{p}{();} \PYGdefault{n}{it2}\PYGdefault{o}{++}\PYGdefault{p}{)\PYGdefaultZob{}}
+			\PYGdefault{n}{printf}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}}\PYGdefault{l+s+se}{\PYGdefaultZbs{}n}\PYGdefault{l+s}{\PYGdefaultZpc{}s\PYGdefaultZdq{}}\PYGdefault{p}{,} \PYGdefault{o}{*}\PYGdefault{n}{it2}\PYGdefault{p}{);}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{printVector}\PYGdefault{p}{(}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{n}{vec}\PYGdefault{p}{)\PYGdefaultZob{}}
+	\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}::}\PYGdefault{n}{iterator} \PYGdefault{n}{iter}\PYGdefault{p}{;}
+	\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{n}{iter} \PYGdefault{o}{=} \PYGdefault{n}{vec}\PYGdefault{p}{.}\PYGdefault{n}{begin}\PYGdefault{p}{();} \PYGdefault{n}{iter} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{vec}\PYGdefault{p}{.}\PYGdefault{n}{end}\PYGdefault{p}{();} \PYGdefault{n}{iter}\PYGdefault{o}{++}\PYGdefault{p}{)\PYGdefaultZob{}}
+		\PYGdefault{n}{printf}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}}\PYGdefault{l+s+se}{\PYGdefaultZbs{}n}\PYGdefault{l+s}{\PYGdefaultZpc{}s\PYGdefaultZdq{}}\PYGdefault{p}{,} \PYGdefault{o}{*}\PYGdefault{n}{iter}\PYGdefault{p}{);}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{PrintError}\PYGdefault{p}{()\PYGdefaultZob{}}
+	\PYGdefault{n}{printf}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}ERROR: invalid word.}\PYGdefault{l+s+se}{\PYGdefaultZbs{}n}\PYGdefault{l+s}{\PYGdefaultZdq{}}\PYGdefault{p}{);}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{parse}\PYGdefault{p}{(}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{n}{list}\PYGdefault{p}{)\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// this functions as a statemachine for parsing text and executing token groups (no piping)}
+	\PYGdefault{c+c1}{// function is called within recursive piping}
+	\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}::}\PYGdefault{n}{iterator} \PYGdefault{n}{iter} \PYGdefault{o}{=} \PYGdefault{n}{list}\PYGdefault{p}{.}\PYGdefault{n}{begin}\PYGdefault{p}{();}
+	\PYGdefault{n}{ParseState} \PYGdefault{n}{state} \PYGdefault{o}{=} \PYGdefault{n}{Start}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{command}\PYGdefault{p}{;}
+	\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{n}{args}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{int} \PYGdefault{n}{inFile} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{int} \PYGdefault{n}{outFile} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{int} \PYGdefault{n}{pid}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{int} \PYGdefault{n}{fd}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{2}\PYGdefault{p}{];}
+	\PYGdefault{k}{while}\PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{list}\PYGdefault{p}{.}\PYGdefault{n}{empty}\PYGdefault{p}{())\PYGdefaultZob{}}
+		\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{n}{iter} \PYGdefault{o}{==} \PYGdefault{n}{list}\PYGdefault{p}{.}\PYGdefault{n}{end}\PYGdefault{p}{())\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{// go to execute state, break while loop}
+				\PYGdefault{n}{list}\PYGdefault{p}{.}\PYGdefault{n}{clear}\PYGdefault{p}{();}
+				\PYGdefault{n}{state} \PYGdefault{o}{=} \PYGdefault{n}{ExecuteCommand}\PYGdefault{p}{;}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{k}{switch}\PYGdefault{p}{(}\PYGdefault{n}{state}\PYGdefault{p}{)\PYGdefaultZob{}}
+			\PYGdefault{k}{case} \PYGdefault{n+nl}{Start}\PYGdefault{p}{:}
+			\PYGdefault{c+c1}{// get command}
+				\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{word}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{iter}\PYGdefault{p}{))\PYGdefaultZob{}}
+					\PYGdefault{n}{PrintError}\PYGdefault{p}{();}
+					\PYGdefault{n}{list}\PYGdefault{p}{.}\PYGdefault{n}{clear}\PYGdefault{p}{();}
+					\PYGdefault{k}{break}\PYGdefault{p}{;}
+				\PYGdefault{p}{\PYGdefaultZcb{}}\PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+					\PYGdefault{n}{command} \PYGdefault{o}{=} \PYGdefault{o}{*}\PYGdefault{n}{iter}\PYGdefault{p}{;}
+					\PYGdefault{n}{args}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{iter}\PYGdefault{p}{);}
+					\PYGdefault{n}{iter}\PYGdefault{o}{++}\PYGdefault{p}{;}
+					\PYGdefault{n}{state} \PYGdefault{o}{=} \PYGdefault{n}{CheckWord}\PYGdefault{p}{;}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{k}{break}\PYGdefault{p}{;}
+			\PYGdefault{k}{case} \PYGdefault{n+nl}{CheckWord}\PYGdefault{p}{:}
+			\PYGdefault{c+c1}{// if word, add to args}
+				\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{word}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{iter}\PYGdefault{p}{))\PYGdefaultZob{}}
+					\PYGdefault{n}{state} \PYGdefault{o}{=} \PYGdefault{n}{CheckOperator}\PYGdefault{p}{;}
+				\PYGdefault{p}{\PYGdefaultZcb{}}\PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+					\PYGdefault{n}{args}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{iter}\PYGdefault{p}{);}
+					\PYGdefault{n}{iter}\PYGdefault{o}{++}\PYGdefault{p}{;}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{k}{break}\PYGdefault{p}{;}
+			\PYGdefault{k}{case} \PYGdefault{n+nl}{CheckOperator}\PYGdefault{p}{:}
+			\PYGdefault{c+c1}{// if operator, handle files, otw \PYGdefaultZhy{}\PYGdefaultZgt{} ERROR}
+				\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{iter}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZlt{}\PYGdefaultZdq{}}\PYGdefault{p}{)} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)\PYGdefaultZob{}}
+					\PYGdefault{n}{iter}\PYGdefault{o}{++}\PYGdefault{p}{;}
+					\PYGdefault{n}{state} \PYGdefault{o}{=} \PYGdefault{n}{InputRedirection}\PYGdefault{p}{;}
+				\PYGdefault{p}{\PYGdefaultZcb{}}\PYGdefault{k}{else} \PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{iter}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZgt{}\PYGdefaultZdq{}}\PYGdefault{p}{)} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)\PYGdefaultZob{}}
+					\PYGdefault{n}{iter}\PYGdefault{o}{++}\PYGdefault{p}{;}
+					\PYGdefault{n}{state} \PYGdefault{o}{=} \PYGdefault{n}{OutputRedirection}\PYGdefault{p}{;}
+				\PYGdefault{p}{\PYGdefaultZcb{}}\PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+					\PYGdefault{n}{PrintError}\PYGdefault{p}{();}
+					\PYGdefault{n}{list}\PYGdefault{p}{.}\PYGdefault{n}{clear}\PYGdefault{p}{();}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{k}{break}\PYGdefault{p}{;}
+			\PYGdefault{k}{case} \PYGdefault{n+nl}{InputRedirection}\PYGdefault{p}{:}
+			\PYGdefault{c+c1}{// handle input file pipe}
+				\PYGdefault{n}{inFile} \PYGdefault{o}{=} \PYGdefault{n}{open}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{iter}\PYGdefault{p}{,} \PYGdefault{n}{O\PYGdefaultZus{}RDONLY}\PYGdefault{p}{);}
+				\PYGdefault{n}{iter}\PYGdefault{o}{++}\PYGdefault{p}{;}
+				\PYGdefault{n}{state} \PYGdefault{o}{=} \PYGdefault{n}{CheckWord}\PYGdefault{p}{;}
+				\PYGdefault{k}{break}\PYGdefault{p}{;}
+			\PYGdefault{k}{case} \PYGdefault{n+nl}{OutputRedirection}\PYGdefault{p}{:}
+			\PYGdefault{c+c1}{// handle outout file pipe}
+				\PYGdefault{n}{outFile} \PYGdefault{o}{=} \PYGdefault{n}{open}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{iter}\PYGdefault{p}{,} \PYGdefault{n}{O\PYGdefaultZus{}WRONLY} \PYGdefault{o}{|} \PYGdefault{n}{O\PYGdefaultZus{}TRUNC} \PYGdefault{o}{|}
+					\PYGdefault{n}{O\PYGdefaultZus{}CREAT}\PYGdefault{p}{,}\PYGdefault{n}{S\PYGdefaultZus{}IRUSR} \PYGdefault{o}{|} \PYGdefault{n}{S\PYGdefaultZus{}IRGRP} \PYGdefault{o}{|} \PYGdefault{n}{S\PYGdefaultZus{}IWGRP} \PYGdefault{o}{|} \PYGdefault{n}{S\PYGdefaultZus{}IWUSR}\PYGdefault{p}{);}
+				\PYGdefault{n}{iter}\PYGdefault{o}{++}\PYGdefault{p}{;}
+				\PYGdefault{n}{state} \PYGdefault{o}{=} \PYGdefault{n}{CheckWord}\PYGdefault{p}{;}
+				\PYGdefault{k}{break}\PYGdefault{p}{;}
+			\PYGdefault{k}{case} \PYGdefault{n+nl}{ExecuteCommand}\PYGdefault{p}{:}
+			\PYGdefault{c+c1}{// set up and call execvp by forking a child process}
+				\PYGdefault{k+kt}{int} \PYGdefault{n}{fd}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{2}\PYGdefault{p}{];}
+				\PYGdefault{n}{pipe}\PYGdefault{p}{(}\PYGdefault{n}{fd}\PYGdefault{p}{);}
+				\PYGdefault{k+kt}{int} \PYGdefault{n}{pid\PYGdefaultZus{}u} \PYGdefault{o}{=} \PYGdefault{n}{fork}\PYGdefault{p}{();}
+				\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{n}{pid\PYGdefaultZus{}u} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)\PYGdefaultZob{}}
+				\PYGdefault{c+c1}{// fork process}
+					\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{n}{inFile} \PYGdefault{o}{!=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)\PYGdefaultZob{}}
+					\PYGdefault{c+c1}{// set up input pipe}
+						\PYGdefault{n}{dup2}\PYGdefault{p}{(}\PYGdefault{n}{inFile}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{);}
+						\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{inFile}\PYGdefault{p}{);}
+					\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+				 		\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{fd}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{]);}
+					\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{outFile} \PYGdefault{o}{!=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)\PYGdefaultZob{}}
+					\PYGdefault{c+c1}{// set up output pipe}
+						\PYGdefault{n}{dup2}\PYGdefault{p}{(}\PYGdefault{n}{outFile}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{);}
+						\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{outFile}\PYGdefault{p}{);}
+					\PYGdefault{p}{\PYGdefaultZcb{}}
+					\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{c\PYGdefaultZus{}args}\PYGdefault{p}{[}\PYGdefault{n}{args}\PYGdefault{p}{.}\PYGdefault{n}{size}\PYGdefault{p}{()} \PYGdefault{o}{+} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{];}
+					\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}::}\PYGdefault{n}{iterator} \PYGdefault{n}{iter2}\PYGdefault{p}{;}
+					\PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;}
+					\PYGdefault{k}{for}\PYGdefault{p}{(}\PYGdefault{n}{iter2} \PYGdefault{o}{=} \PYGdefault{n}{args}\PYGdefault{p}{.}\PYGdefault{n}{begin}\PYGdefault{p}{();} \PYGdefault{n}{iter2} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{args}\PYGdefault{p}{.}\PYGdefault{n}{end}\PYGdefault{p}{();} \PYGdefault{n}{iter2}\PYGdefault{o}{++}\PYGdefault{p}{)\PYGdefaultZob{}}
+						\PYGdefault{n}{c\PYGdefaultZus{}args}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{o}{*}\PYGdefault{n}{iter2}\PYGdefault{p}{;}
+						\PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{;}
+					\PYGdefault{p}{\PYGdefaultZcb{}}
+					\PYGdefault{n}{c\PYGdefaultZus{}args}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{n+nb}{NULL}\PYGdefault{p}{;}
+					\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{n}{execvp}\PYGdefault{p}{(}\PYGdefault{n}{command}\PYGdefault{p}{,} \PYGdefault{n}{c\PYGdefaultZus{}args}\PYGdefault{p}{)} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)\PYGdefaultZob{}}
+						\PYGdefault{n}{printf}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}ERROR: exec failed.\PYGdefaultZdq{}}\PYGdefault{p}{);}
+						\PYGdefault{n}{exit}\PYGdefault{p}{(}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{);}
+					\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+					\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{fd}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{0}\PYGdefault{p}{]);}
+					\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{fd}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{]);}
+					\PYGdefault{n}{wait}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{);}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{k}{break}\PYGdefault{p}{;}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{close\PYGdefaultZus{}pipes}\PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{pipes}\PYGdefault{p}{[])\PYGdefaultZob{}}
+	\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{length}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)\PYGdefaultZob{}}
+		\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{pipes}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{]);}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{pipe\PYGdefaultZus{}recursion}\PYGdefault{p}{(}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{n}{vec}\PYGdefault{p}{,} \PYGdefault{k+kt}{int} \PYGdefault{n}{pipes}\PYGdefault{p}{[],} \PYGdefault{k+kt}{int} \PYGdefault{n}{size}\PYGdefault{p}{,} \PYGdefault{k+kt}{int} \PYGdefault{n}{input}\PYGdefault{p}{,} \PYGdefault{k+kt}{int} \PYGdefault{n}{output}\PYGdefault{p}{)\PYGdefaultZob{}}
+	\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{n}{current} \PYGdefault{o}{=} \PYGdefault{n}{vec}\PYGdefault{p}{.}\PYGdefault{n}{back}\PYGdefault{p}{();}
+	\PYGdefault{n}{vec}\PYGdefault{p}{.}\PYGdefault{n}{pop\PYGdefaultZus{}back}\PYGdefault{p}{();}
+	\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{vec}\PYGdefault{p}{.}\PYGdefault{n}{size}\PYGdefault{p}{()} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// base case, only pipe input}
+		\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{n}{fork}\PYGdefault{p}{()} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)\PYGdefaultZob{}}
+			\PYGdefault{n}{dup2}\PYGdefault{p}{(}\PYGdefault{n}{pipes}\PYGdefault{p}{[}\PYGdefault{n}{length} \PYGdefault{o}{\PYGdefaultZhy{}} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{],} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{);}
+			\PYGdefault{n}{close\PYGdefaultZus{}pipes}\PYGdefault{p}{(}\PYGdefault{n}{pipes}\PYGdefault{p}{);}
+			\PYGdefault{n}{parse}\PYGdefault{p}{(}\PYGdefault{n}{current}\PYGdefault{p}{);}
+			\PYGdefault{n}{exit}\PYGdefault{p}{(}\PYGdefault{l+m+mi}{0}\PYGdefault{p}{);}
+		\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{k}{return}\PYGdefault{p}{;}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{vec}\PYGdefault{p}{.}\PYGdefault{n}{size}\PYGdefault{p}{()} \PYGdefault{o}{==} \PYGdefault{n}{size}\PYGdefault{p}{)\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// initial case, only pipe output}
+		\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{n}{fork}\PYGdefault{p}{()} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)} \PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{n}{dup2}\PYGdefault{p}{(}\PYGdefault{n}{pipes}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{],} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{);}
+			\PYGdefault{n}{close\PYGdefaultZus{}pipes}\PYGdefault{p}{(}\PYGdefault{n}{pipes}\PYGdefault{p}{);}
+			\PYGdefault{n}{parse}\PYGdefault{p}{(}\PYGdefault{n}{current}\PYGdefault{p}{);}
+			\PYGdefault{n}{exit}\PYGdefault{p}{(}\PYGdefault{l+m+mi}{0}\PYGdefault{p}{);}
+		\PYGdefault{p}{\PYGdefaultZcb{}}\PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{n}{input} \PYGdefault{o}{+=} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{;}
+			\PYGdefault{n}{output} \PYGdefault{o}{+=} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{;}
+			\PYGdefault{n}{pipe\PYGdefaultZus{}recursion}\PYGdefault{p}{(}\PYGdefault{n}{vec}\PYGdefault{p}{,} \PYGdefault{n}{pipes}\PYGdefault{p}{,} \PYGdefault{n}{size}\PYGdefault{p}{,} \PYGdefault{n}{input}\PYGdefault{p}{,} \PYGdefault{n}{output}\PYGdefault{p}{);}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// else pipe based on position in groups}
+		\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{n}{fork}\PYGdefault{p}{()} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)} \PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{n}{dup2}\PYGdefault{p}{(}\PYGdefault{n}{pipes}\PYGdefault{p}{[}\PYGdefault{n}{input}\PYGdefault{p}{],} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{);}
+			\PYGdefault{n}{dup2}\PYGdefault{p}{(}\PYGdefault{n}{pipes}\PYGdefault{p}{[}\PYGdefault{n}{output}\PYGdefault{p}{],} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{);}
+			\PYGdefault{n}{close\PYGdefaultZus{}pipes}\PYGdefault{p}{(}\PYGdefault{n}{pipes}\PYGdefault{p}{);}
+			\PYGdefault{n}{parse}\PYGdefault{p}{(}\PYGdefault{n}{current}\PYGdefault{p}{);}
+			\PYGdefault{n}{exit}\PYGdefault{p}{(}\PYGdefault{l+m+mi}{0}\PYGdefault{p}{);}
+		\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{n}{input} \PYGdefault{o}{+=} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{;}
+			\PYGdefault{n}{output} \PYGdefault{o}{+=} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{;}
+			\PYGdefault{n}{pipe\PYGdefaultZus{}recursion}\PYGdefault{p}{(}\PYGdefault{n}{vec}\PYGdefault{p}{,} \PYGdefault{n}{pipes}\PYGdefault{p}{,} \PYGdefault{n}{size}\PYGdefault{p}{,} \PYGdefault{n}{input}\PYGdefault{p}{,} \PYGdefault{n}{output}\PYGdefault{p}{);}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+
+\PYGdefault{k+kt}{int} \PYGdefault{n+nf}{main}\PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{argc}\PYGdefault{p}{,} \PYGdefault{k+kt}{char}\PYGdefault{o}{**} \PYGdefault{n}{argv}\PYGdefault{p}{)\PYGdefaultZob{}}
+	\PYGdefault{k+kt}{char} \PYGdefault{o}{*}\PYGdefault{n}{buf} \PYGdefault{o}{=} \PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{n}{malloc}\PYGdefault{p}{(}\PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{p}{)}\PYGdefault{o}{*}\PYGdefault{l+m+mi}{1024}\PYGdefault{p}{);}
+	\PYGdefault{k+kt}{char} \PYGdefault{o}{*}\PYGdefault{n}{token}\PYGdefault{p}{;}
+	\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{n}{tokens}\PYGdefault{p}{;}
+	\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{n}{groups}\PYGdefault{p}{;}
+	\PYGdefault{k}{while}\PYGdefault{p}{(}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{)\PYGdefaultZob{}}
+		\PYGdefault{n}{printf}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}}\PYGdefault{l+s+se}{\PYGdefaultZbs{}n}\PYGdefault{l+s}{\PYGdefaultZgt{} \PYGdefaultZdq{}}\PYGdefault{p}{);}
+		\PYGdefault{n}{fgets}\PYGdefault{p}{(}\PYGdefault{n}{buf}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{1024}\PYGdefault{p}{,} \PYGdefault{n}{stdin}\PYGdefault{p}{);}
+		\PYGdefault{c+c1}{// fill char buffer with console input}
+		\PYGdefault{k+kt}{int} \PYGdefault{n}{x}\PYGdefault{p}{;}
+		\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{n}{x} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{x} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{strlen}\PYGdefault{p}{(}\PYGdefault{n}{buf}\PYGdefault{p}{);} \PYGdefault{n}{x}\PYGdefault{o}{++}\PYGdefault{p}{)\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{// remove trailing newline or carriage return}
+			\PYGdefault{k}{if} \PYGdefault{p}{(} \PYGdefault{n}{buf}\PYGdefault{p}{[}\PYGdefault{n}{x}\PYGdefault{p}{]} \PYGdefault{o}{==} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}n\PYGdefaultZsq{}} \PYGdefault{o}{||} \PYGdefault{n}{buf}\PYGdefault{p}{[}\PYGdefault{n}{x}\PYGdefault{p}{]} \PYGdefault{o}{==} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}r\PYGdefaultZsq{}} \PYGdefault{p}{)\PYGdefaultZob{}}
+                			\PYGdefault{n}{buf}\PYGdefault{p}{[}\PYGdefault{n}{x}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}0\PYGdefaultZsq{}}\PYGdefault{p}{;}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{strlen}\PYGdefault{p}{(}\PYGdefault{n}{buf}\PYGdefault{p}{)} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{l+m+mi}{80}\PYGdefault{p}{)\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{// throw error if over 80 chars}
+			\PYGdefault{n}{printf}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}}\PYGdefault{l+s+se}{\PYGdefaultZbs{}n}\PYGdefault{l+s}{ERROR: maximum number of characters (80) exceeded.}\PYGdefault{l+s+se}{\PYGdefaultZbs{}n\PYGdefaultZbs{}n}\PYGdefault{l+s}{\PYGdefaultZdq{}}\PYGdefault{p}{);}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{k}{else} \PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{buf}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}exit\PYGdefaultZdq{}}\PYGdefault{p}{)} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)} \PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{// exit program if input is \PYGdefaultZsq{}exit\PYGdefaultZsq{}}
+			\PYGdefault{k}{break}\PYGdefault{p}{;}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{n}{token} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n}{buf}\PYGdefault{p}{,}\PYGdefault{l+s}{\PYGdefaultZdq{} \PYGdefaultZdq{}}\PYGdefault{p}{);}
+			\PYGdefault{c+c1}{// split buffer based on spaces and add to a list}
+			\PYGdefault{k}{while} \PYGdefault{p}{(}\PYGdefault{n}{token} \PYGdefault{o}{!=} \PYGdefault{n+nb}{NULL}\PYGdefault{p}{)\PYGdefaultZob{}}
+				\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{);}
+				\PYGdefault{n}{token} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,}\PYGdefault{l+s}{\PYGdefaultZdq{} \PYGdefaultZdq{}}\PYGdefault{p}{);}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}::}\PYGdefault{n}{iterator} \PYGdefault{n}{it}\PYGdefault{p}{;}
+			\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{n}{temp}\PYGdefault{p}{;}
+			\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{n}{it} \PYGdefault{o}{=} \PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{begin}\PYGdefault{p}{();} \PYGdefault{n}{it} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{end}\PYGdefault{p}{();} \PYGdefault{n}{it}\PYGdefault{o}{++}\PYGdefault{p}{)\PYGdefaultZob{}}
+			\PYGdefault{c+c1}{// split each token based on pipes and put into nested list}
+				\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{it}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}|\PYGdefaultZdq{}}\PYGdefault{p}{)} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)\PYGdefaultZob{}}
+					\PYGdefault{n}{groups}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{temp}\PYGdefault{p}{);}
+					\PYGdefault{n}{temp}\PYGdefault{p}{.}\PYGdefault{n}{clear}\PYGdefault{p}{();}
+					\PYGdefault{k}{continue}\PYGdefault{p}{;}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{k}{else} \PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{it} \PYGdefault{o}{==} \PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{end}\PYGdefault{p}{()} \PYGdefault{o}{\PYGdefaultZhy{}} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{)\PYGdefaultZob{}}
+					\PYGdefault{n}{temp}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{it}\PYGdefault{p}{);}
+					\PYGdefault{n}{groups}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{temp}\PYGdefault{p}{);}
+					\PYGdefault{n}{temp}\PYGdefault{p}{.}\PYGdefault{n}{clear}\PYGdefault{p}{();}
+					\PYGdefault{k}{continue}\PYGdefault{p}{;}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{n}{temp}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{it}\PYGdefault{p}{);}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{clear}\PYGdefault{p}{();}
+			\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{o}{\PYGdefaultZgt{}::}\PYGdefault{n}{iterator} \PYGdefault{n}{its}\PYGdefault{p}{;}
+			\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{n}{groups\PYGdefaultZus{}real}\PYGdefault{p}{;}
+			\PYGdefault{k}{for}\PYGdefault{p}{(}\PYGdefault{n}{its} \PYGdefault{o}{=} \PYGdefault{n}{groups}\PYGdefault{p}{.}\PYGdefault{n}{begin}\PYGdefault{p}{();} \PYGdefault{n}{its} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{groups}\PYGdefault{p}{.}\PYGdefault{n}{end}\PYGdefault{p}{();} \PYGdefault{n}{its}\PYGdefault{o}{++}\PYGdefault{p}{)\PYGdefaultZob{}}
+			\PYGdefault{c+c1}{// this for loop was added to handle file redirectors not}
+				\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{n}{print} \PYGdefault{o}{=} \PYGdefault{o}{*}\PYGdefault{n}{its}\PYGdefault{p}{;}
+				\PYGdefault{c+c1}{// not separated by spaces}
+				\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{n}{it} \PYGdefault{o}{=} \PYGdefault{n}{print}\PYGdefault{p}{.}\PYGdefault{n}{begin}\PYGdefault{p}{();} \PYGdefault{n}{it} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{print}\PYGdefault{p}{.}\PYGdefault{n}{end}\PYGdefault{p}{();} \PYGdefault{n}{it}\PYGdefault{o}{++}\PYGdefault{p}{)\PYGdefaultZob{}}
+					\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{word}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{it}\PYGdefault{p}{))\PYGdefaultZob{}}
+						\PYGdefault{k+kt}{int} \PYGdefault{n}{check} \PYGdefault{o}{=} \PYGdefault{n}{lt\PYGdefaultZus{}gt}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{it}\PYGdefault{p}{);}
+						\PYGdefault{k+kt}{char} \PYGdefault{o}{*} \PYGdefault{n}{dummy} \PYGdefault{o}{=} \PYGdefault{o}{*}\PYGdefault{n}{it}\PYGdefault{p}{;}
+						\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{it}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZlt{}\PYGdefaultZdq{}}\PYGdefault{p}{)} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)\PYGdefaultZob{}}
+							\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{((}\PYGdefault{k+kt}{char}\PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZlt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+						\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{it}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZgt{}\PYGdefaultZdq{}}\PYGdefault{p}{)} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)\PYGdefaultZob{}}
+							\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{((}\PYGdefault{k+kt}{char}\PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZgt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+						\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{check} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{3}\PYGdefault{p}{)\PYGdefaultZob{}}
+						\PYGdefault{c+c1}{// both}
+							\PYGdefault{k+kt}{char} \PYGdefault{o}{*} \PYGdefault{n}{lt} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n}{dummy}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZlt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+							\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{lt}\PYGdefault{p}{);}
+							\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{((}\PYGdefault{k+kt}{char}\PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZlt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+							\PYGdefault{n}{lt} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZlt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+							\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{lt}\PYGdefault{p}{);}
+							\PYGdefault{k+kt}{char} \PYGdefault{o}{*} \PYGdefault{n}{gt} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n}{lt}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZgt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+							\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{((}\PYGdefault{k+kt}{char}\PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZgt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+							\PYGdefault{n}{gt} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZgt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+							\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{gt}\PYGdefault{p}{);}
+						\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{check} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{)\PYGdefaultZob{}}
+						\PYGdefault{c+c1}{// gt}
+							\PYGdefault{k+kt}{char} \PYGdefault{o}{*} \PYGdefault{n}{gt} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n}{dummy}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZgt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+							\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{gt}\PYGdefault{p}{);}
+							\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{((}\PYGdefault{k+kt}{char}\PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZgt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+							\PYGdefault{n}{gt} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZgt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+							\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{gt}\PYGdefault{p}{);}
+						\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{check} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{)\PYGdefaultZob{}}
+						\PYGdefault{c+c1}{// lt}
+							\PYGdefault{k+kt}{char} \PYGdefault{o}{*} \PYGdefault{n}{lt} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n}{dummy}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZlt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+							\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{lt}\PYGdefault{p}{);}
+							\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{((}\PYGdefault{k+kt}{char}\PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZlt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+							\PYGdefault{n}{lt} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZlt{}\PYGdefaultZdq{}}\PYGdefault{p}{);}
+							\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{lt}\PYGdefault{p}{);}
+						\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+							\PYGdefault{n}{PrintError}\PYGdefault{p}{();}
+						\PYGdefault{p}{\PYGdefaultZcb{}}
+					\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+						\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{it}\PYGdefault{p}{);}
+					\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{n}{groups\PYGdefaultZus{}real}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{tokens}\PYGdefault{p}{);}
+				\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{clear}\PYGdefault{p}{();}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{n}{reverse}\PYGdefault{p}{;}
+			\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{o}{\PYGdefaultZgt{}::}\PYGdefault{n}{iterator} \PYGdefault{n}{r\PYGdefaultZus{}it}\PYGdefault{p}{;}
+			\PYGdefault{k}{for}\PYGdefault{p}{(}\PYGdefault{n}{r\PYGdefaultZus{}it} \PYGdefault{o}{=} \PYGdefault{n}{groups\PYGdefaultZus{}real}\PYGdefault{p}{.}\PYGdefault{n}{end}\PYGdefault{p}{()} \PYGdefault{o}{\PYGdefaultZhy{}} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{;} \PYGdefault{n}{r\PYGdefaultZus{}it} \PYGdefault{o}{\PYGdefaultZgt{}=} \PYGdefault{n}{groups\PYGdefaultZus{}real}\PYGdefault{p}{.}\PYGdefault{n}{begin}\PYGdefault{p}{();} \PYGdefault{n}{r\PYGdefaultZus{}it}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZhy{}}\PYGdefault{p}{)\PYGdefaultZob{}}
+			\PYGdefault{c+c1}{// reverse the groups for recursive piping}
+				\PYGdefault{n}{reverse}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{r\PYGdefaultZus{}it}\PYGdefault{p}{);}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{n}{groups\PYGdefaultZus{}real}\PYGdefault{p}{.}\PYGdefault{n}{swap}\PYGdefault{p}{(}\PYGdefault{n}{reverse}\PYGdefault{p}{);}
+			\PYGdefault{k+kt}{int} \PYGdefault{n}{size} \PYGdefault{o}{=} \PYGdefault{n}{groups\PYGdefaultZus{}real}\PYGdefault{p}{.}\PYGdefault{n}{size}\PYGdefault{p}{();}
+			\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{n}{groups\PYGdefaultZus{}real}\PYGdefault{p}{.}\PYGdefault{n}{size}\PYGdefault{p}{()} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{)\PYGdefaultZob{}}
+			\PYGdefault{c+c1}{// if there are pipes, use recursive piping function}
+				\PYGdefault{n}{length} \PYGdefault{o}{=} \PYGdefault{p}{(}\PYGdefault{n}{groups\PYGdefaultZus{}real}\PYGdefault{p}{.}\PYGdefault{n}{size}\PYGdefault{p}{()} \PYGdefault{o}{\PYGdefaultZhy{}} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{)} \PYGdefault{o}{*} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{;}
+				\PYGdefault{k+kt}{int} \PYGdefault{n}{pipes}\PYGdefault{p}{[}\PYGdefault{n}{length}\PYGdefault{p}{];}
+				\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{length} \PYGdefault{o}{/} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)\PYGdefaultZob{}}
+					\PYGdefault{n}{pipe}\PYGdefault{p}{(}\PYGdefault{n}{pipes} \PYGdefault{o}{+} \PYGdefault{l+m+mi}{2}\PYGdefault{o}{*}\PYGdefault{n}{i}\PYGdefault{p}{);}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{n}{pipe\PYGdefaultZus{}recursion}\PYGdefault{p}{(}\PYGdefault{n}{groups\PYGdefaultZus{}real}\PYGdefault{p}{,} \PYGdefault{n}{pipes}\PYGdefault{p}{,} \PYGdefault{n}{groups\PYGdefaultZus{}real}\PYGdefault{p}{.}\PYGdefault{n}{size}\PYGdefault{p}{(),} \PYGdefault{o}{\PYGdefaultZhy{}}\PYGdefault{l+m+mi}{2}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{);}
+				\PYGdefault{n}{close\PYGdefaultZus{}pipes}\PYGdefault{p}{(}\PYGdefault{n}{pipes}\PYGdefault{p}{);}
+				\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{size}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)\PYGdefaultZob{}}
+					\PYGdefault{n}{wait}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{);}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{k}{else} \PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{c+c1}{// else just parse the one group}
+				\PYGdefault{n}{parse}\PYGdefault{p}{(}\PYGdefault{n}{groups\PYGdefaultZus{}real}\PYGdefault{p}{.}\PYGdefault{n}{front}\PYGdefault{p}{());}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{n}{temp}\PYGdefault{p}{.}\PYGdefault{n}{clear}\PYGdefault{p}{();}
+			\PYGdefault{c+c1}{// clear all the lists}
+			\PYGdefault{n}{tokens}\PYGdefault{p}{.}\PYGdefault{n}{clear}\PYGdefault{p}{();}
+			\PYGdefault{n}{groups}\PYGdefault{p}{.}\PYGdefault{n}{clear}\PYGdefault{p}{();}
+			\PYGdefault{n}{groups\PYGdefaultZus{}real}\PYGdefault{p}{.}\PYGdefault{n}{clear}\PYGdefault{p}{();}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{k}{return} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+\end{Verbatim}

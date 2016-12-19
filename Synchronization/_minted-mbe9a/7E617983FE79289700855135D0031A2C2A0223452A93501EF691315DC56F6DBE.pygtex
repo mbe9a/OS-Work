@@ -1,0 +1,113 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{c+c1}{// Michael Eller mbe9a}
+\PYGdefault{c+c1}{// OS Machine Problem 2}
+\PYGdefault{c+c1}{// 29 Spetember 2016}
+\PYGdefault{c+c1}{// maximum\PYGdefaultZus{}finder.cpp}
+
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZdq{}maximum\PYGdefaultZus{}finder.h\PYGdefaultZdq{}}
+
+\PYGdefault{c+c1}{// thread function to calculate the maximum of the input numbers}
+\PYGdefault{k+kt}{void}\PYGdefault{o}{*} \PYGdefault{n+nf}{find\PYGdefaultZus{}maximum} \PYGdefault{p}{(}\PYGdefault{k+kt}{void}\PYGdefault{o}{*} \PYGdefault{n}{input}\PYGdefault{p}{)}
+\PYGdefault{p}{\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// cast input into pthread\PYGdefaultZus{}params}
+	\PYGdefault{k}{struct} \PYGdefault{n}{pthread\PYGdefaultZus{}params}\PYGdefault{o}{*} \PYGdefault{n}{parameters}\PYGdefault{p}{;}
+	\PYGdefault{n}{parameters} \PYGdefault{o}{=} \PYGdefault{p}{(}\PYGdefault{n}{pthread\PYGdefaultZus{}params}\PYGdefault{o}{*}\PYGdefault{p}{)} \PYGdefault{n}{input}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// main loop, runs once per round}
+	\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{rounds}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{// make sure only \PYGdefaultZsq{}valid\PYGdefaultZsq{} threads continue comparing and adding to the next round}
+		\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{tid} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{results}\PYGdefault{p}{)[}\PYGdefault{n}{i}\PYGdefault{p}{].}\PYGdefault{n}{size}\PYGdefault{p}{()}\PYGdefault{o}{/}\PYGdefault{l+m+mi}{2}\PYGdefault{p}{)}
+		\PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{c+c1}{// get values from current vector}
+			\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{value\PYGdefaultZus{}1} \PYGdefault{o}{=} \PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{results}\PYGdefault{p}{)[}\PYGdefault{n}{i}\PYGdefault{p}{][}\PYGdefault{l+m+mi}{2}\PYGdefault{o}{*}\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{tid}\PYGdefault{p}{];}
+			\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{value\PYGdefaultZus{}2} \PYGdefault{o}{=} \PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{results}\PYGdefault{p}{)[}\PYGdefault{n}{i}\PYGdefault{p}{][}\PYGdefault{l+m+mi}{2}\PYGdefault{o}{*}\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{tid} \PYGdefault{o}{+} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{];}
+
+			\PYGdefault{c+c1}{// determine which value is larger}
+			\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{value\PYGdefaultZus{}1} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{value\PYGdefaultZus{}2}\PYGdefault{p}{)}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{result} \PYGdefault{o}{=} \PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{value\PYGdefaultZus{}1}\PYGdefault{p}{;}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{k}{else}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{result} \PYGdefault{o}{=} \PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{value\PYGdefaultZus{}2}\PYGdefault{p}{;}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+
+			\PYGdefault{c+c1}{// add result to next vector}
+			\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{results}\PYGdefault{p}{)[}\PYGdefault{n}{i} \PYGdefault{o}{+} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{][}\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{tid}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{result}\PYGdefault{p}{;}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+
+		\PYGdefault{c+c1}{// wait on all threads before the next round}
+		\PYGdefault{n}{parameters}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{barrier}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZgt{}}\PYGdefault{n}{wait}\PYGdefault{p}{();}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+
+	\PYGdefault{c+c1}{// kill thread when done}
+	\PYGdefault{n}{pthread\PYGdefaultZus{}exit}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{);}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+
+\PYGdefault{k+kt}{int} \PYGdefault{n+nf}{main} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{argc}\PYGdefault{p}{,} \PYGdefault{k+kt}{char} \PYGdefault{k}{const} \PYGdefault{o}{*}\PYGdefault{n}{argv}\PYGdefault{p}{[])}
+\PYGdefault{p}{\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// list to hold the numbers}
+	\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{int}\PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{n}{numbers}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// read input, stop if blank line is received}
+	\PYGdefault{k+kt}{char} \PYGdefault{o}{*}\PYGdefault{n}{buffer} \PYGdefault{o}{=} \PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{n}{malloc}\PYGdefault{p}{(}\PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{p}{)}\PYGdefault{o}{*}\PYGdefault{l+m+mi}{128}\PYGdefault{p}{);}
+	\PYGdefault{k}{while}\PYGdefault{p}{(}\PYGdefault{n}{fgets}\PYGdefault{p}{(}\PYGdefault{n}{buffer}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{128}\PYGdefault{p}{,} \PYGdefault{n}{stdin}\PYGdefault{p}{)[}\PYGdefault{l+m+mi}{0}\PYGdefault{p}{]} \PYGdefault{o}{!=} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}n\PYGdefaultZsq{}}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{// use atoi() to cast to int and push to the vector list}
+		\PYGdefault{n}{numbers}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{atoi}\PYGdefault{p}{(}\PYGdefault{n}{buffer}\PYGdefault{p}{));}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+
+	\PYGdefault{c+c1}{// get number of threads to create}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{number\PYGdefaultZus{}of\PYGdefaultZus{}threads} \PYGdefault{o}{=} \PYGdefault{n}{numbers}\PYGdefault{p}{.}\PYGdefault{n}{size}\PYGdefault{p}{()}\PYGdefault{o}{/}\PYGdefault{l+m+mi}{2}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// calculate number of rounds based on the number of inputs \PYGdefaultZhy{}\PYGdefaultZhy{} assuming powers of 2}
+	\PYGdefault{k+kt}{int} \PYGdefault{n}{rounds} \PYGdefault{o}{=} \PYGdefault{n}{log2}\PYGdefault{p}{(}\PYGdefault{n}{numbers}\PYGdefault{p}{.}\PYGdefault{n}{size}\PYGdefault{p}{());}
+
+	\PYGdefault{c+c1}{// make nested vector for the results of each round}
+	\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{int}\PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{n}{results}\PYGdefault{p}{;}
+	\PYGdefault{n}{results}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{numbers}\PYGdefault{p}{);}
+	\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{rounds} \PYGdefault{o}{+} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{// must initialize vectors with size to prevent segfaults}
+		\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{int}\PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{n}{temp} \PYGdefault{p}{(}\PYGdefault{n}{numbers}\PYGdefault{p}{.}\PYGdefault{n}{size}\PYGdefault{p}{()}\PYGdefault{o}{/}\PYGdefault{p}{(}\PYGdefault{l+m+mi}{2}\PYGdefault{o}{*}\PYGdefault{n}{i}\PYGdefault{p}{),} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{);}
+		\PYGdefault{n}{results}\PYGdefault{p}{.}\PYGdefault{n}{push\PYGdefaultZus{}back}\PYGdefault{p}{(}\PYGdefault{n}{temp}\PYGdefault{p}{);}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+
+	\PYGdefault{c+c1}{// create the barrier for synchronization}
+	\PYGdefault{n}{Barrier} \PYGdefault{n}{barrier} \PYGdefault{o}{=} \PYGdefault{n}{Barrier}\PYGdefault{p}{(}\PYGdefault{n}{number\PYGdefaultZus{}of\PYGdefaultZus{}threads}\PYGdefault{p}{);}
+
+	\PYGdefault{c+c1}{// create paramters list}
+	\PYGdefault{n}{pthread\PYGdefaultZus{}params} \PYGdefault{n}{pthread\PYGdefaultZus{}params\PYGdefaultZus{}array}\PYGdefault{p}{[}\PYGdefault{n}{number\PYGdefaultZus{}of\PYGdefaultZus{}threads}\PYGdefault{p}{];}
+
+	\PYGdefault{c+c1}{// create threads list}
+	\PYGdefault{n}{pthread\PYGdefaultZus{}t} \PYGdefault{n}{pthread\PYGdefaultZus{}array}\PYGdefault{p}{[}\PYGdefault{n}{number\PYGdefaultZus{}of\PYGdefaultZus{}threads}\PYGdefault{p}{];}
+
+	\PYGdefault{c+c1}{// create pthread attr}
+	\PYGdefault{n}{pthread\PYGdefaultZus{}attr\PYGdefaultZus{}t} \PYGdefault{n}{thread\PYGdefaultZus{}attr}\PYGdefault{p}{;}
+	\PYGdefault{n}{pthread\PYGdefaultZus{}attr\PYGdefaultZus{}init}\PYGdefault{p}{(}\PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{thread\PYGdefaultZus{}attr}\PYGdefault{p}{);}
+
+	\PYGdefault{c+c1}{// create the threads and thread parameter structs}
+	\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{number\PYGdefaultZus{}of\PYGdefaultZus{}threads}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{// value\PYGdefaultZus{}1 and value\PYGdefaultZus{}2 are set in find\PYGdefaultZus{}maximum()}
+		\PYGdefault{n}{pthread\PYGdefaultZus{}params\PYGdefaultZus{}array}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{].}\PYGdefault{n}{rounds} \PYGdefault{o}{=} \PYGdefault{n}{rounds}\PYGdefault{p}{;}
+		\PYGdefault{n}{pthread\PYGdefaultZus{}params\PYGdefaultZus{}array}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{].}\PYGdefault{n}{tid} \PYGdefault{o}{=} \PYGdefault{n}{i}\PYGdefault{p}{;}
+		\PYGdefault{n}{pthread\PYGdefaultZus{}params\PYGdefaultZus{}array}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{].}\PYGdefault{n}{results} \PYGdefault{o}{=} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{results}\PYGdefault{p}{;}
+		\PYGdefault{n}{pthread\PYGdefaultZus{}params\PYGdefaultZus{}array}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{].}\PYGdefault{n}{barrier} \PYGdefault{o}{=} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{barrier}\PYGdefault{p}{;}
+		\PYGdefault{n}{pthread\PYGdefaultZus{}create}\PYGdefault{p}{(}\PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{pthread\PYGdefaultZus{}array}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{],} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{thread\PYGdefaultZus{}attr}\PYGdefault{p}{,} \PYGdefault{n}{find\PYGdefaultZus{}maximum}\PYGdefault{p}{,} \PYGdefault{p}{(}\PYGdefault{k+kt}{void}\PYGdefault{o}{*}\PYGdefault{p}{)} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{pthread\PYGdefaultZus{}params\PYGdefaultZus{}array}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{]);}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+
+	\PYGdefault{c+c1}{// join on all threads}
+	\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{number\PYGdefaultZus{}of\PYGdefaultZus{}threads}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{n}{pthread\PYGdefaultZus{}join}\PYGdefault{p}{(}\PYGdefault{n}{pthread\PYGdefaultZus{}array}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{],} \PYGdefault{n+nb}{NULL}\PYGdefault{p}{);}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+
+	\PYGdefault{c+c1}{// final result is filtered down to the first thread\PYGdefaultZsq{}s result}
+	\PYGdefault{c+c1}{// display final result to stdin and exit}
+	\PYGdefault{n}{printf}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZpc{}d}\PYGdefault{l+s+se}{\PYGdefaultZbs{}n}\PYGdefault{l+s}{\PYGdefaultZdq{}}\PYGdefault{p}{,} \PYGdefault{n}{pthread\PYGdefaultZus{}params\PYGdefaultZus{}array}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{0}\PYGdefault{p}{].}\PYGdefault{n}{result}\PYGdefault{p}{);}
+
+	\PYGdefault{k}{return} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+\end{Verbatim}

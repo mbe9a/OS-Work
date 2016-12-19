@@ -1,0 +1,59 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+		\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{table\PYGdefaultZus{}value} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)}
+		\PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{c+c1}{// calculate the offset of this table entry}
+			\PYGdefault{n}{table\PYGdefaultZus{}entry\PYGdefaultZus{}offset} \PYGdefault{o}{=} \PYGdefault{p}{(}\PYGdefault{n}{index} \PYGdefault{o}{*} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{k+kt}{short}\PYGdefault{p}{))} \PYGdefault{o}{+} \PYGdefault{p}{(}\PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{reserved\PYGdefaultZus{}sectors} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{);}
+
+			\PYGdefault{c+c1}{// fill the fat table with the old index}
+			\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{found}\PYGdefault{p}{)}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,(}\PYGdefault{n}{prev\PYGdefaultZus{}table\PYGdefaultZus{}entry\PYGdefaultZus{}index} \PYGdefault{o}{*} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{k+kt}{short}\PYGdefault{p}{))} \PYGdefault{o}{+}
+					\PYGdefault{p}{(}\PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{reserved\PYGdefaultZus{}sectors} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{),} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+				\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{index}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{k+kt}{short}\PYGdefault{p}{));}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{c+c1}{// first cluster found}
+			\PYGdefault{k}{else}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{c+c1}{// write FFFF in case this is the only cluster}
+				\PYGdefault{n}{dir\PYGdefaultZus{}entry}\PYGdefault{p}{.}\PYGdefault{n}{starting\PYGdefaultZus{}cluster} \PYGdefault{o}{=} \PYGdefault{n}{index}\PYGdefault{p}{;}
+				\PYGdefault{n}{found} \PYGdefault{o}{=} \PYGdefault{n+nb}{true}\PYGdefault{p}{;}
+				\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{n}{table\PYGdefaultZus{}entry\PYGdefaultZus{}offset}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+				\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{prev\PYGdefaultZus{}table\PYGdefaultZus{}entry\PYGdefaultZus{}index}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{k+kt}{short}\PYGdefault{p}{));}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{n}{prev\PYGdefaultZus{}table\PYGdefaultZus{}entry\PYGdefaultZus{}index} \PYGdefault{o}{=} \PYGdefault{n}{index}\PYGdefault{p}{;}
+
+			\PYGdefault{c+c1}{// start writing data to the cluster}
+			\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{file\PYGdefaultZus{}size} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{p}{(}\PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sectors\PYGdefaultZus{}per\PYGdefaultZus{}cluster} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{))}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{src\PYGdefaultZus{}file}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{src\PYGdefaultZus{}buffer}\PYGdefault{p}{,} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sectors\PYGdefaultZus{}per\PYGdefaultZus{}cluster} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{);}
+				\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{n}{first\PYGdefaultZus{}sector\PYGdefaultZus{}of\PYGdefaultZus{}cluster}\PYGdefault{p}{(}\PYGdefault{n}{index}\PYGdefault{p}{,} \PYGdefault{n+nb}{true}\PYGdefault{p}{)} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+				\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{src\PYGdefaultZus{}buffer}\PYGdefault{p}{,} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sectors\PYGdefaultZus{}per\PYGdefaultZus{}cluster} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{);}
+
+				\PYGdefault{c+c1}{// decrement remaining bytes}
+				\PYGdefault{n}{file\PYGdefaultZus{}size} \PYGdefault{o}{\PYGdefaultZhy{}=} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sectors\PYGdefaultZus{}per\PYGdefaultZus{}cluster} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{;}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{k}{else}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{c+c1}{// write remaining file data to the cluster}
+				\PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{src\PYGdefaultZus{}file}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{src\PYGdefaultZus{}buffer}\PYGdefault{p}{,} \PYGdefault{n}{file\PYGdefaultZus{}size}\PYGdefault{p}{);}
+				\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{n}{first\PYGdefaultZus{}sector\PYGdefaultZus{}of\PYGdefaultZus{}cluster}\PYGdefault{p}{(}\PYGdefault{n}{index}\PYGdefault{p}{,} \PYGdefault{n+nb}{true}\PYGdefault{p}{)} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+				\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{src\PYGdefaultZus{}buffer}\PYGdefault{p}{,} \PYGdefault{n}{file\PYGdefaultZus{}size}\PYGdefault{p}{);}
+
+				\PYGdefault{c+c1}{// write FFFF to the last cluster}
+				\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{n}{table\PYGdefaultZus{}entry\PYGdefaultZus{}offset}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+				\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{last\PYGdefaultZus{}entry} \PYGdefault{o}{=} \PYGdefault{l+m+mh}{0xFFFF}\PYGdefault{p}{;}
+				\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{last\PYGdefaultZus{}entry}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{k+kt}{short}\PYGdefault{p}{));}
+				\PYGdefault{k}{break}\PYGdefault{p}{;}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{n}{index}\PYGdefault{o}{++}\PYGdefault{p}{;}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{c+c1}{// find a spot for the file entry and write it}
+	\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{n}{starting\PYGdefaultZus{}offset}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+	\PYGdefault{n}{write\PYGdefaultZus{}dir\PYGdefaultZus{}entry}\PYGdefault{p}{(}\PYGdefault{n}{dir\PYGdefaultZus{}entry}\PYGdefault{p}{,} \PYGdefault{n}{arguments}\PYGdefault{p}{);}
+
+	\PYGdefault{c+c1}{// return to the original position}
+	\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{n}{starting\PYGdefaultZus{}offset}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+	\PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{CURRENT}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{Fat16Entry}\PYGdefault{p}{));}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+\end{Verbatim}

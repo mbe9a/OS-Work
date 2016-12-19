@@ -1,0 +1,55 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+			\PYGdefault{c+c1}{// store file on the server}
+			\PYGdefault{k}{else} \PYGdefault{n+nf}{if} \PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}STOR\PYGdefaultZdq{}}\PYGdefault{p}{))}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{c+c1}{// check that the type is binary first}
+				\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{TYPEI}\PYGdefault{p}{)}
+				\PYGdefault{p}{\PYGdefaultZob{}}
+					\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC451}\PYGdefault{p}{,} \PYGdefault{n}{SRC451LEN}\PYGdefault{p}{);}
+					\PYGdefault{k}{continue}\PYGdefault{p}{;}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{c+c1}{// open the file}
+				\PYGdefault{n}{token} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL} \PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{} }\PYGdefault{l+s+se}{\PYGdefaultZbs{}n\PYGdefaultZbs{}r}\PYGdefault{l+s}{\PYGdefaultZdq{}}\PYGdefault{p}{);}
+				\PYGdefault{k+kt}{int} \PYGdefault{n}{stor\PYGdefaultZus{}file} \PYGdefault{o}{=} \PYGdefault{n}{open}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{,} \PYGdefault{n}{O\PYGdefaultZus{}CREAT} \PYGdefault{o}{|} \PYGdefault{n}{O\PYGdefaultZus{}TRUNC} \PYGdefault{o}{|} \PYGdefault{n}{O\PYGdefaultZus{}RDWR}\PYGdefault{p}{,} \PYGdefault{n}{S\PYGdefaultZus{}IRWXU}\PYGdefault{p}{);}
+				\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{stor\PYGdefaultZus{}file} \PYGdefault{o}{==} \PYGdefault{o}{\PYGdefaultZhy{}}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{)}
+				\PYGdefault{p}{\PYGdefaultZob{}}
+					\PYGdefault{n}{perror}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}could not create server\PYGdefaultZhy{}side file\PYGdefaultZdq{}}\PYGdefault{p}{);}
+					\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{stor\PYGdefaultZus{}file}\PYGdefault{p}{);}
+					\PYGdefault{n}{exit}\PYGdefault{p}{(}\PYGdefault{n}{EXIT\PYGdefaultZus{}FAILURE}\PYGdefault{p}{);}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{c+c1}{// start reading from the client}
+				\PYGdefault{k+kt}{char} \PYGdefault{n}{buffer}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{1024}\PYGdefault{p}{];}
+
+				\PYGdefault{c+c1}{// return code 125}
+				\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC125}\PYGdefault{p}{,} \PYGdefault{n}{SRC125LEN}\PYGdefault{p}{);}
+				\PYGdefault{k+kt}{int} \PYGdefault{n}{bytes}\PYGdefault{p}{;}
+				\PYGdefault{k}{while} \PYGdefault{p}{((}\PYGdefault{n}{bytes} \PYGdefault{o}{=} \PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}client\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{buffer}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{1024}\PYGdefault{p}{))} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)} \PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{stor\PYGdefaultZus{}file}\PYGdefault{p}{,} \PYGdefault{n}{buffer}\PYGdefault{p}{,} \PYGdefault{n}{bytes}\PYGdefault{p}{);}
+
+				\PYGdefault{c+c1}{// close and finish}
+				\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{stor\PYGdefaultZus{}file}\PYGdefault{p}{);}
+				\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}client\PYGdefaultZus{}fd}\PYGdefault{p}{);}
+
+				\PYGdefault{c+c1}{// send 226 back to the client}
+				\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC226}\PYGdefault{p}{,} \PYGdefault{n}{SRC226LEN}\PYGdefault{p}{);}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{c+c1}{// return code 221 \PYGdefaultZhy{} service closing control connection}
+		\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC221}\PYGdefault{p}{,} \PYGdefault{n}{SRC221LEN}\PYGdefault{p}{);}
+
+		\PYGdefault{c+c1}{// shutdown the control and data connections, check if unsuccessful}
+		\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{shutdown}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SHUT\PYGdefaultZus{}RDWR}\PYGdefault{p}{)} \PYGdefault{o}{==} \PYGdefault{o}{\PYGdefaultZhy{}}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{)}
+		\PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{n}{perror}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}shutdown failed\PYGdefaultZdq{}}\PYGdefault{p}{);}
+			\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{);}
+			\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}control\PYGdefaultZus{}fd}\PYGdefault{p}{);}
+			\PYGdefault{n}{exit}\PYGdefault{p}{(}\PYGdefault{n}{EXIT\PYGdefaultZus{}FAILURE}\PYGdefault{p}{);}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{c+c1}{// set the socket as reusable to the kernel}
+		\PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{;}
+		\PYGdefault{n}{setsockopt}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}control\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SOL\PYGdefaultZus{}SOCKET}\PYGdefault{p}{,} \PYGdefault{n}{SO\PYGdefaultZus{}REUSEADDR}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{i}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{k+kt}{int}\PYGdefault{p}{));}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{c+c1}{// close the stuffs, return}
+	\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}control\PYGdefaultZus{}fd}\PYGdefault{p}{);}
+	\PYGdefault{k}{return} \PYGdefault{n}{EXIT\PYGdefaultZus{}SUCCESS}\PYGdefault{p}{;}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+\end{Verbatim}

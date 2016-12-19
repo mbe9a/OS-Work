@@ -1,0 +1,24 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{c+c1}{\PYGdefaultZsh{}\PYGdefaultZsh{} Michael Eller mbe9a}
+\PYGdefault{c+c1}{\PYGdefaultZsh{}\PYGdefaultZsh{} OS Machine Problem 3}
+\PYGdefault{c+c1}{\PYGdefaultZsh{}\PYGdefaultZsh{} 22 November 2016}
+\PYGdefault{c+c1}{\PYGdefaultZsh{}\PYGdefaultZsh{} makefile}
+
+\PYGdefault{n+nv}{OBJS} \PYGdefault{o}{=} file\PYGdefaultZus{}manager.o
+\PYGdefault{n+nv}{CC} \PYGdefault{o}{=} g++
+\PYGdefault{n+nv}{DEBUG} \PYGdefault{o}{=} \PYGdefaultZhy{}g
+\PYGdefault{n+nv}{CFLAGS} \PYGdefault{o}{=} \PYGdefaultZhy{}Wall \PYGdefaultZhy{}c \PYGdefault{k}{\PYGdefaultZdl{}(}DEBUG\PYGdefault{k}{)}
+\PYGdefault{n+nv}{LFLAGS} \PYGdefault{o}{=} \PYGdefaultZhy{}Wall \PYGdefault{k}{\PYGdefaultZdl{}(}DEBUG\PYGdefault{k}{)}
+
+fat: \PYGdefault{k}{\PYGdefaultZdl{}(}OBJS\PYGdefault{k}{)}
+	\PYGdefault{k}{\PYGdefaultZdl{}(}CC\PYGdefault{k}{)} \PYGdefault{k}{\PYGdefaultZdl{}(}LFLAGS\PYGdefault{k}{)} \PYGdefault{k}{\PYGdefaultZdl{}(}OBJS\PYGdefault{k}{)} \PYGdefaultZhy{}o fat
+
+file\PYGdefaultZus{}manager.o: file\PYGdefaultZus{}manager.h file\PYGdefaultZus{}manager.cpp
+	\PYGdefault{k}{\PYGdefaultZdl{}(}CC\PYGdefault{k}{)} \PYGdefault{k}{\PYGdefaultZdl{}(}CFLAGS\PYGdefault{k}{)} file\PYGdefaultZus{}manager.cpp
+
+clean:
+	\PYGdefault{l+s+se}{\PYGdefaultZbs{}r}m *.o *\PYGdefaultZti{} fat
+
+tar:
+	tar cfv mbe9a.tar fat file\PYGdefaultZus{}manager.h file\PYGdefaultZus{}manager.cpp makefile mbe9a.pdf
+\end{Verbatim}

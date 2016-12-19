@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{n}{ls}
+\PYGdefault{n}{gr}\PYGdefault{o}{*}\PYGdefault{n}{p}
+\PYGdefault{o}{/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{ls}\PYGdefault{o}{|/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{grep} \PYGdefault{n}{a}
+\PYGdefault{o}{/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{ls} \PYGdefault{o}{|} \PYGdefault{o}{/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{grep} \PYGdefault{n}{a} \PYGdefault{o}{|} \PYGdefault{o}{/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{grep}
+\PYGdefault{o}{/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{ls}
+\PYGdefault{o}{/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{ls} \PYGdefault{o}{|} \PYGdefault{o}{/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{grep} \PYGdefault{n}{a} \PYGdefault{o}{|} \PYGdefault{o}{/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{grep} \PYGdefault{n}{b}
+\PYGdefault{o}{/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{cat} \PYGdefault{n}{scores} \PYGdefault{o}{|} \PYGdefault{o}{/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{grep} \PYGdefault{n}{uva} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{n}{test\PYGdefaultZus{}output}
+\PYGdefault{o}{/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{ls} \PYGdefault{o}{\PYGdefaultZhy{}}\PYGdefault{n}{l} \PYGdefault{o}{|} \PYGdefault{o}{/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{grep} \PYGdefault{n}{a}
+\PYGdefault{o}{/}\PYGdefault{n}{bin}\PYGdefault{o}{/}\PYGdefault{n}{grep} \PYGdefault{n}{a} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{scores}
+\end{Verbatim}

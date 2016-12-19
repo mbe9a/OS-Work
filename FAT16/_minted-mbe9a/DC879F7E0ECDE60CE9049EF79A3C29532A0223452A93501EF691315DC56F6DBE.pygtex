@@ -1,0 +1,106 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{c+c1}{// Michael Eller mbe9a}
+\PYGdefault{c+c1}{// OS Machine Problem 3}
+\PYGdefault{c+c1}{// 22 November 2016}
+\PYGdefault{c+c1}{// file\PYGdefaultZus{}manager.h (structs and function protos)}
+
+\PYGdefault{c+cp}{\PYGdefaultZsh{}ifndef FILE\PYGdefaultZus{}MANAGER\PYGdefaultZus{}H}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define FILE\PYGdefaultZus{}MANAGER\PYGdefaultZus{}H}
+
+\PYGdefault{c+c1}{// entry attribute definitions}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define READ\PYGdefaultZus{}ONLY	0x01}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define HIDDEN 		0x02}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SYSTEM 		0x04}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define VOLUME\PYGdefaultZus{}ID 	0x08}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define DIRECTORY 	0x10}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define ARCHIVE		0x20}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define LFN			0x0F}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}sys/types.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}unistd.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}fcntl.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}stdio.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}stdlib.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}iostream\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}string.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}list\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}errno.h\PYGdefaultZgt{}}
+\PYGdefault{k}{using} \PYGdefault{k}{namespace} \PYGdefault{n}{std}\PYGdefault{p}{;}
+
+\PYGdefault{c+c1}{// struct to hold the FAT16 boot sector}
+\PYGdefault{k}{typedef} \PYGdefault{k}{struct} \PYGdefault{p}{\PYGdefaultZob{}}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{jmp}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{3}\PYGdefault{p}{];}
+    \PYGdefault{k+kt}{char} \PYGdefault{n}{oem}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{8}\PYGdefault{p}{];}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{sectors\PYGdefaultZus{}per\PYGdefaultZus{}cluster}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{reserved\PYGdefaultZus{}sectors}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{number\PYGdefaultZus{}of\PYGdefaultZus{}fats}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{root\PYGdefaultZus{}dir\PYGdefaultZus{}entries}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{total\PYGdefaultZus{}sectors\PYGdefaultZus{}short}\PYGdefault{p}{;} \PYGdefault{c+c1}{// if zero, later field is used}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{media\PYGdefaultZus{}descriptor}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{fat\PYGdefaultZus{}size\PYGdefaultZus{}sectors}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{sectors\PYGdefaultZus{}per\PYGdefaultZus{}track}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{number\PYGdefaultZus{}of\PYGdefaultZus{}heads}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{hidden\PYGdefaultZus{}sectors}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{total\PYGdefaultZus{}sectors\PYGdefaultZus{}long}\PYGdefault{p}{;}
+
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{drive\PYGdefaultZus{}number}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{current\PYGdefaultZus{}head}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{boot\PYGdefaultZus{}signature}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{volume\PYGdefaultZus{}id}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{char} \PYGdefault{n}{volume\PYGdefaultZus{}label}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{11}\PYGdefault{p}{];}
+    \PYGdefault{k+kt}{char} \PYGdefault{n}{fs\PYGdefaultZus{}type}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{8}\PYGdefault{p}{];}
+    \PYGdefault{k+kt}{char} \PYGdefault{n}{boot\PYGdefaultZus{}code}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{448}\PYGdefault{p}{];}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{boot\PYGdefaultZus{}sector\PYGdefaultZus{}signature}\PYGdefault{p}{;}
+\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{n}{\PYGdefaultZus{}\PYGdefaultZus{}attribute}\PYGdefault{p}{((}\PYGdefault{n}{packed}\PYGdefault{p}{))} \PYGdefault{n}{Fat16BootSector}\PYGdefault{p}{;}
+
+ \PYGdefault{c+c1}{// struct to hold a FAT16 entry}
+\PYGdefault{k}{typedef} \PYGdefault{k}{struct} \PYGdefault{p}{\PYGdefaultZob{}}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{filename}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{8}\PYGdefault{p}{];}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{ext}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{3}\PYGdefault{p}{];}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{attributes}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{reserved}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{10}\PYGdefault{p}{];}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{modify\PYGdefaultZus{}time}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{modify\PYGdefaultZus{}date}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{starting\PYGdefaultZus{}cluster}\PYGdefault{p}{;}
+    \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{file\PYGdefaultZus{}size}\PYGdefault{p}{;}
+\PYGdefault{p}{\PYGdefaultZcb{}} \PYGdefault{n}{\PYGdefaultZus{}\PYGdefaultZus{}attribute}\PYGdefault{p}{((}\PYGdefault{n}{packed}\PYGdefault{p}{))} \PYGdefault{n}{Fat16Entry}\PYGdefault{p}{;}
+
+\PYGdefault{c+c1}{// function to retrieve the FAT value of the active cluster}
+\PYGdefault{k+kt}{bool} \PYGdefault{n+nf}{get\PYGdefaultZus{}fat\PYGdefaultZus{}value}\PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short}\PYGdefault{o}{*} \PYGdefault{n}{value}\PYGdefault{p}{);}
+
+\PYGdefault{c+c1}{// function to return the offset of the first data sector of a given cluster}
+\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n+nf}{first\PYGdefaultZus{}sector\PYGdefaultZus{}of\PYGdefaultZus{}cluster}\PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{cluster}\PYGdefault{p}{);}
+
+\PYGdefault{c+c1}{// read dir entries in single cluster (directory)}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{list\PYGdefaultZus{}directory}\PYGdefault{p}{(}\PYGdefault{n}{string} \PYGdefault{n}{path}\PYGdefault{p}{);}
+
+\PYGdefault{c+c1}{// change\PYGdefaultZus{}directory helper function}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{next\PYGdefaultZus{}entry}\PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{starting\PYGdefaultZus{}sector}\PYGdefault{p}{,} \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{offset}\PYGdefault{p}{);}
+
+\PYGdefault{c+c1}{// method to change the PWD string, another helper function for \PYGdefaultZsq{}cd\PYGdefaultZsq{}}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{update\PYGdefaultZus{}pwd}\PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{direction}\PYGdefault{p}{);}
+
+\PYGdefault{c+c1}{// implementation of cd command}
+\PYGdefault{n}{Fat16Entry} \PYGdefault{n+nf}{change\PYGdefaultZus{}directory}\PYGdefault{p}{(}\PYGdefault{n}{string} \PYGdefault{n}{path}\PYGdefault{p}{,} \PYGdefault{k+kt}{bool} \PYGdefault{n}{ls}\PYGdefault{p}{);}
+
+\PYGdefault{c+c1}{// helper function for main, takes in a char* and outputs a list of arguments}
+\PYGdefault{n}{list}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{n}{build\PYGdefaultZus{}arguments}\PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{token}\PYGdefault{p}{);}
+
+\PYGdefault{c+c1}{// helper function for main, takes in a list\PYGdefaultZlt{}char*\PYGdefaultZgt{}* and call change\PYGdefaultZus{}directory}
+\PYGdefault{n}{Fat16Entry} \PYGdefault{n+nf}{follow\PYGdefaultZus{}path}\PYGdefault{p}{(}\PYGdefault{n}{list}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}*} \PYGdefault{n}{arguments}\PYGdefault{p}{,} \PYGdefault{k+kt}{bool} \PYGdefault{n}{ls}\PYGdefault{p}{);}
+
+\PYGdefault{c+c1}{// helper function to test if we are in the root directory}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{check\PYGdefaultZus{}and\PYGdefaultZus{}set\PYGdefaultZus{}root}\PYGdefault{p}{();}
+
+\PYGdefault{c+c1}{// copy out function implementation}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{copy\PYGdefaultZus{}out}\PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{dest}\PYGdefault{p}{,} \PYGdefault{n}{list}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}*} \PYGdefault{n}{arguments}\PYGdefault{p}{);}
+
+\PYGdefault{c+c1}{// helper function for copy in, returns the offset of the dir entry written by this function}
+\PYGdefault{c+c1}{// very similar to \PYGdefaultZsq{}ls\PYGdefaultZsq{}}
+\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n+nf}{write\PYGdefaultZus{}dir\PYGdefaultZus{}entry}\PYGdefault{p}{(}\PYGdefault{n}{Fat16Entry} \PYGdefault{n}{dir\PYGdefaultZus{}entry}\PYGdefault{p}{,} \PYGdefault{n}{list}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}*} \PYGdefault{n}{arguments}\PYGdefault{p}{);}
+
+\PYGdefault{c+c1}{// copy in function implementation, file modify data and time are neglected, attributes are assumed 0x00}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{copy\PYGdefaultZus{}in}\PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{name}\PYGdefault{p}{,} \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int}\PYGdefault{o}{*} \PYGdefault{n}{src\PYGdefaultZus{}file}\PYGdefault{p}{,} \PYGdefault{n}{list}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}*} \PYGdefault{n}{arguments}\PYGdefault{p}{);}
+
+\PYGdefault{c+cp}{\PYGdefaultZsh{}endif}
+\end{Verbatim}

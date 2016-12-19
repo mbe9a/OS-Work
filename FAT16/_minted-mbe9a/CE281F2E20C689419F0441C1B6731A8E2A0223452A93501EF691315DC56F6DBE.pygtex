@@ -1,0 +1,54 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{c+c1}{// copy in function implementation, file modify data and time are neglected, attributes are assumed 0x00}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{copy\PYGdefaultZus{}in}\PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{name}\PYGdefault{p}{,} \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int}\PYGdefault{o}{*} \PYGdefault{n}{src\PYGdefaultZus{}file}\PYGdefault{p}{,} \PYGdefault{n}{list}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}*} \PYGdefault{n}{arguments}\PYGdefault{p}{)}
+\PYGdefault{p}{\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// get the cluster of pwd, before we start searching}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{starting\PYGdefaultZus{}offset} \PYGdefault{o}{=} \PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}CUR}\PYGdefault{p}{);}
+
+	\PYGdefault{c+c1}{// build the dir entry}
+	\PYGdefault{n}{Fat16Entry} \PYGdefault{n}{dir\PYGdefaultZus{}entry}\PYGdefault{p}{;}
+	\PYGdefault{n}{dir\PYGdefaultZus{}entry}\PYGdefault{p}{.}\PYGdefault{n}{attributes} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{file\PYGdefaultZus{}size} \PYGdefault{o}{=} \PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{src\PYGdefaultZus{}file}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}END}\PYGdefault{p}{);}
+	\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{src\PYGdefaultZus{}file}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+	\PYGdefault{n}{dir\PYGdefaultZus{}entry}\PYGdefault{p}{.}\PYGdefault{n}{file\PYGdefaultZus{}size} \PYGdefault{o}{=} \PYGdefault{n}{file\PYGdefaultZus{}size}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// build filename}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{filename}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{8}\PYGdefault{p}{];}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{i}\PYGdefault{p}{;}
+	\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{strlen}\PYGdefault{p}{(}\PYGdefault{n}{name}\PYGdefault{p}{)} \PYGdefault{o}{\PYGdefaultZhy{}} \PYGdefault{l+m+mi}{4}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)} \PYGdefault{n}{filename}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{n}{name}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{];}
+
+	\PYGdefault{c+c1}{// add spaces for any left over space}
+	\PYGdefault{k}{while} \PYGdefault{p}{(}\PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{l+m+mi}{8}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{n}{filename}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{l+s+sc}{\PYGdefaultZsq{} \PYGdefaultZsq{}}\PYGdefault{p}{;}
+		\PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{;}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+
+	\PYGdefault{c+c1}{// copy into the struct}
+	\PYGdefault{n}{memcpy}\PYGdefault{p}{(}\PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{dir\PYGdefaultZus{}entry}\PYGdefault{p}{.}\PYGdefault{n}{filename}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{filename}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{8}\PYGdefault{p}{);}
+
+	\PYGdefault{c+c1}{// file extension}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{index} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{;}
+	\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{n}{strlen}\PYGdefault{p}{(}\PYGdefault{n}{name}\PYGdefault{p}{)} \PYGdefault{o}{\PYGdefaultZhy{}} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{n}{strlen}\PYGdefault{p}{(}\PYGdefault{n}{name}\PYGdefault{p}{)} \PYGdefault{o}{\PYGdefaultZhy{}} \PYGdefault{l+m+mi}{4}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZhy{}}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{n}{dir\PYGdefaultZus{}entry}\PYGdefault{p}{.}\PYGdefault{n}{ext}\PYGdefault{p}{[}\PYGdefault{n}{index}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{n}{name}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{];}
+		\PYGdefault{n}{index}\PYGdefault{o}{\PYGdefaultZhy{}\PYGdefaultZhy{}}\PYGdefault{p}{;}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+
+	\PYGdefault{c+c1}{// read the entire FAT table}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{FAT\PYGdefaultZus{}table}\PYGdefault{p}{[}\PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{fat\PYGdefaultZus{}size\PYGdefaultZus{}sectors} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{];}
+	\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{reserved\PYGdefaultZus{}sectors} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+	\PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{FAT\PYGdefaultZus{}table}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{FAT\PYGdefaultZus{}table}\PYGdefault{p}{));}
+
+	\PYGdefault{c+c1}{// find clusters for the file data}
+	\PYGdefault{c+c1}{// start table index at 2 because 0 and 1 are reserved}
+	\PYGdefault{n}{index} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{table\PYGdefaultZus{}entry\PYGdefaultZus{}offset}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{prev\PYGdefaultZus{}table\PYGdefaultZus{}entry\PYGdefaultZus{}index} \PYGdefault{o}{=} \PYGdefault{l+m+mh}{0xFFFF}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{bool} \PYGdefault{n}{found} \PYGdefault{o}{=} \PYGdefault{n+nb}{false}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{src\PYGdefaultZus{}buffer}\PYGdefault{p}{[}\PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sectors\PYGdefaultZus{}per\PYGdefaultZus{}cluster} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{];}
+	\PYGdefault{k}{while} \PYGdefault{p}{(}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{// get the value from the table}
+		\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{table\PYGdefaultZus{}value} \PYGdefault{o}{=} \PYGdefault{o}{*}\PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short}\PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{FAT\PYGdefaultZus{}table}\PYGdefault{p}{[}\PYGdefault{n}{index} \PYGdefault{o}{*} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{k+kt}{short}\PYGdefault{p}{)];}
+\end{Verbatim}

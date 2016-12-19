@@ -1,0 +1,120 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+			\PYGdefault{c+c1}{// port command to open the data connection}
+			\PYGdefault{k}{else} \PYGdefault{n+nf}{if} \PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}PORT\PYGdefaultZdq{}}\PYGdefault{p}{))}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{c+c1}{// reinitialize the socket}
+				\PYGdefault{n}{socket\PYGdefaultZus{}client\PYGdefaultZus{}fd} \PYGdefault{o}{=} \PYGdefault{n}{socket}\PYGdefault{p}{(}\PYGdefault{n}{AF\PYGdefaultZus{}INET}\PYGdefault{p}{,} \PYGdefault{n}{SOCK\PYGdefaultZus{}STREAM}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{6}\PYGdefault{p}{);}
+				\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}client\PYGdefaultZus{}fd} \PYGdefault{o}{==} \PYGdefault{o}{\PYGdefaultZhy{}}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{)}
+				\PYGdefault{p}{\PYGdefaultZob{}}
+					\PYGdefault{n}{perror}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}cannot create data socket\PYGdefaultZdq{}}\PYGdefault{p}{);}
+					\PYGdefault{n}{exit}\PYGdefault{p}{(}\PYGdefault{n}{EXIT\PYGdefaultZus{}FAILURE}\PYGdefault{p}{);}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{c+c1}{// retrieve port number for client data connection}
+				\PYGdefault{n}{token} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{},\PYGdefaultZdq{}}\PYGdefault{p}{);}
+				\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{l+m+mi}{4}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)} \PYGdefault{n}{token} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{},\PYGdefaultZdq{}}\PYGdefault{p}{);}
+
+				\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{client\PYGdefaultZus{}port}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{2}\PYGdefault{p}{];}
+				\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)}
+				\PYGdefault{p}{\PYGdefaultZob{}}
+					\PYGdefault{n}{client\PYGdefaultZus{}port}\PYGdefault{p}{[}\PYGdefault{n}{i}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{n}{atoi}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{);}
+					\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{i} \PYGdefault{o}{==} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{)} \PYGdefault{k}{break}\PYGdefault{p}{;}
+					\PYGdefault{n}{token} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{},\PYGdefaultZdq{}}\PYGdefault{p}{);}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+
+				\PYGdefault{c+c1}{// build client address struct}
+				\PYGdefault{n}{memset}\PYGdefault{p}{(}\PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{client\PYGdefaultZus{}addr}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{,} \PYGdefault{k}{sizeof} \PYGdefault{n}{client\PYGdefaultZus{}addr}\PYGdefault{p}{);}
+				\PYGdefault{n}{client\PYGdefaultZus{}addr}\PYGdefault{p}{.}\PYGdefault{n}{sin\PYGdefaultZus{}family} \PYGdefault{o}{=} \PYGdefault{n}{AF\PYGdefaultZus{}INET}\PYGdefault{p}{;}
+				\PYGdefault{n}{client\PYGdefaultZus{}addr}\PYGdefault{p}{.}\PYGdefault{n}{sin\PYGdefaultZus{}port} \PYGdefault{o}{=} \PYGdefault{n}{htons}\PYGdefault{p}{((}\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short}\PYGdefault{p}{)((}\PYGdefault{n}{client\PYGdefaultZus{}port}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{0}\PYGdefault{p}{]} \PYGdefault{o}{*} \PYGdefault{l+m+mi}{256}\PYGdefault{p}{)} \PYGdefault{o}{+} \PYGdefault{n}{client\PYGdefaultZus{}port}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{]));}
+				\PYGdefault{n}{client\PYGdefaultZus{}addr}\PYGdefault{p}{.}\PYGdefault{n}{sin\PYGdefaultZus{}addr}\PYGdefault{p}{.}\PYGdefault{n}{s\PYGdefaultZus{}addr} \PYGdefault{o}{=} \PYGdefault{n}{inet\PYGdefaultZus{}addr}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}127.0.0.1\PYGdefaultZdq{}}\PYGdefault{p}{);}
+
+				\PYGdefault{c+c1}{// return success code for PORT command}
+				\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC200}\PYGdefault{p}{,} \PYGdefault{n}{SRC200LEN}\PYGdefault{p}{);}
+
+				\PYGdefault{c+c1}{// connect to the client socket}
+				\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{connect}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}client\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{p}{(}\PYGdefault{k}{struct} \PYGdefault{n}{sockaddr} \PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{client\PYGdefaultZus{}addr}\PYGdefault{p}{,} \PYGdefault{k}{sizeof} \PYGdefault{n}{client\PYGdefaultZus{}addr}\PYGdefault{p}{)} \PYGdefault{o}{==} \PYGdefault{o}{\PYGdefaultZhy{}}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{)}
+				\PYGdefault{p}{\PYGdefaultZob{}}
+					\PYGdefault{n}{perror}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}connection to client failed\PYGdefaultZdq{}}\PYGdefault{p}{);}
+					\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}client\PYGdefaultZus{}fd}\PYGdefault{p}{);}
+					\PYGdefault{n}{exit}\PYGdefault{p}{(}\PYGdefault{n}{EXIT\PYGdefaultZus{}FAILURE}\PYGdefault{p}{);}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{c+c1}{// ls}
+			\PYGdefault{k}{else} \PYGdefault{n+nf}{if} \PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}LIST\PYGdefaultZdq{}}\PYGdefault{p}{))}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{c+c1}{// build command}
+				\PYGdefault{n}{string} \PYGdefault{n}{command} \PYGdefault{o}{=} \PYGdefault{l+s}{\PYGdefaultZdq{}ls \PYGdefaultZhy{}l\PYGdefaultZdq{}}\PYGdefault{p}{;}
+				\PYGdefault{n}{string} \PYGdefault{n}{command\PYGdefaultZus{}suffix} \PYGdefault{o}{=} \PYGdefault{l+s}{\PYGdefaultZdq{} \PYGdefaultZgt{} .results\PYGdefaultZdq{}}\PYGdefault{p}{;}
+				\PYGdefault{n}{string} \PYGdefault{n}{path}\PYGdefault{p}{;}
+				\PYGdefault{n}{token} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{} \PYGdefaultZdq{}}\PYGdefault{p}{);}
+				\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{token} \PYGdefault{o}{!=} \PYGdefault{n+nb}{NULL}\PYGdefault{p}{)}
+				\PYGdefault{p}{\PYGdefaultZob{}}
+					\PYGdefault{n}{path} \PYGdefault{o}{=} \PYGdefault{n}{string}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{);}
+					\PYGdefault{n}{command} \PYGdefault{o}{+=} \PYGdefault{l+s}{\PYGdefaultZdq{} \PYGdefaultZdq{}} \PYGdefault{o}{+} \PYGdefault{n}{path}\PYGdefault{p}{;}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{n}{command} \PYGdefault{o}{+=} \PYGdefault{n}{command\PYGdefaultZus{}suffix}\PYGdefault{p}{;}
+
+				\PYGdefault{c+c1}{// call ls and write it to results (a temporary file)}
+				\PYGdefault{n}{remove}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}.results\PYGdefaultZdq{}}\PYGdefault{p}{);}
+				\PYGdefault{n}{system}\PYGdefault{p}{(}\PYGdefault{n}{command}\PYGdefault{p}{.}\PYGdefault{n}{c\PYGdefaultZus{}str}\PYGdefault{p}{());}
+
+				\PYGdefault{c+c1}{// open the file and read from it}
+				\PYGdefault{k+kt}{FILE}\PYGdefault{o}{*} \PYGdefault{n}{results} \PYGdefault{o}{=} \PYGdefault{n}{fopen}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}.results\PYGdefaultZdq{}}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}r\PYGdefaultZdq{}}\PYGdefault{p}{);}
+				\PYGdefault{k+kt}{char} \PYGdefault{n}{buffer}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{256}\PYGdefault{p}{];}
+				\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{size}\PYGdefault{p}{;}
+				\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{filename}\PYGdefault{p}{;}
+				\PYGdefault{n}{stringstream} \PYGdefault{n}{ss}\PYGdefault{p}{;}
+
+				\PYGdefault{c+c1}{//burn the first line}
+				\PYGdefault{n}{fgets}\PYGdefault{p}{(}\PYGdefault{n}{buffer}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{256}\PYGdefault{p}{,} \PYGdefault{n}{results}\PYGdefault{p}{);}
+
+				\PYGdefault{c+c1}{// continue with the rest of the file}
+				\PYGdefault{k}{while}\PYGdefault{p}{(}\PYGdefault{n}{fgets}\PYGdefault{p}{(}\PYGdefault{n}{buffer}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{256}\PYGdefault{p}{,} \PYGdefault{n}{results}\PYGdefault{p}{))}
+				\PYGdefault{p}{\PYGdefaultZob{}}
+					\PYGdefault{c+c1}{// ignore carriage returns and new line characters}
+					\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{x} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned}\PYGdefault{p}{)}\PYGdefault{n}{x} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{strlen}\PYGdefault{p}{(}\PYGdefault{n}{buffer}\PYGdefault{p}{);} \PYGdefault{n}{x}\PYGdefault{o}{++}\PYGdefault{p}{)}
+						\PYGdefault{k}{if} \PYGdefault{p}{(} \PYGdefault{n}{buffer}\PYGdefault{p}{[}\PYGdefault{n}{x}\PYGdefault{p}{]} \PYGdefault{o}{==} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}n\PYGdefaultZsq{}} \PYGdefault{o}{||} \PYGdefault{n}{buffer}\PYGdefault{p}{[}\PYGdefault{n}{x}\PYGdefault{p}{]} \PYGdefault{o}{==} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}r\PYGdefaultZsq{}} \PYGdefault{p}{)} \PYGdefault{n}{buffer}\PYGdefault{p}{[}\PYGdefault{n}{x}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}0\PYGdefaultZsq{}}\PYGdefault{p}{;}
+					\PYGdefault{n}{size} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n}{buffer}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{} \PYGdefaultZdq{}}\PYGdefault{p}{);}
+					\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{l+m+mi}{4}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)} \PYGdefault{n}{size} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{} \PYGdefaultZdq{}}\PYGdefault{p}{);}
+					\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{i} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{n}{i} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{l+m+mi}{4}\PYGdefault{p}{;} \PYGdefault{n}{i}\PYGdefault{o}{++}\PYGdefault{p}{)} \PYGdefault{n}{filename} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{} \PYGdefaultZdq{}}\PYGdefault{p}{);}
+
+					\PYGdefault{c+c1}{// add to the string stream}
+					\PYGdefault{n}{ss} \PYGdefault{o}{\PYGdefaultZlt{}\PYGdefaultZlt{}} \PYGdefault{n}{filename} \PYGdefault{o}{\PYGdefaultZlt{}\PYGdefaultZlt{}} \PYGdefault{l+s}{\PYGdefaultZdq{}}\PYGdefault{l+s+se}{\PYGdefaultZbs{}t}\PYGdefault{l+s}{\PYGdefaultZdq{}} \PYGdefault{o}{\PYGdefaultZlt{}\PYGdefaultZlt{}} \PYGdefault{n}{size} \PYGdefault{o}{\PYGdefaultZlt{}\PYGdefaultZlt{}} \PYGdefault{l+s}{\PYGdefaultZdq{}}\PYGdefault{l+s+se}{\PYGdefaultZbs{}r\PYGdefaultZbs{}n}\PYGdefault{l+s}{\PYGdefaultZdq{}}\PYGdefault{p}{;}
+				\PYGdefault{p}{\PYGdefaultZcb{}}
+				\PYGdefault{n}{fclose}\PYGdefault{p}{(}\PYGdefault{n}{results}\PYGdefault{p}{);}
+				\PYGdefault{n}{remove}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}.results\PYGdefaultZdq{}}\PYGdefault{p}{);}
+
+				\PYGdefault{c+c1}{// return code 125 \PYGdefaultZhy{} data connection already open; transfer starting}
+				\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC125}\PYGdefault{p}{,} \PYGdefault{n}{SRC125LEN}\PYGdefault{p}{);}
+
+				\PYGdefault{c+c1}{// write the string to the client}
+				\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}client\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{ss}\PYGdefault{p}{.}\PYGdefault{n}{str}\PYGdefault{p}{().}\PYGdefault{n}{c\PYGdefaultZus{}str}\PYGdefault{p}{(),} \PYGdefault{n}{ss}\PYGdefault{p}{.}\PYGdefault{n}{str}\PYGdefault{p}{().}\PYGdefault{n}{length}\PYGdefault{p}{());}
+				\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}client\PYGdefaultZus{}fd}\PYGdefault{p}{);}
+
+				\PYGdefault{c+c1}{// return code 226 \PYGdefaultZhy{} closing data connection. Requested file action successful}
+				\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC226}\PYGdefault{p}{,} \PYGdefault{n}{SRC226LEN}\PYGdefault{p}{);}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{c+c1}{// check the type parameter and set the type boolean accordingly}
+			\PYGdefault{k}{else} \PYGdefault{n+nf}{if} \PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}TYPE\PYGdefaultZdq{}}\PYGdefault{p}{))}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{n}{token} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{} \PYGdefaultZdq{}}\PYGdefault{p}{);}
+				\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}I\PYGdefaultZdq{}}\PYGdefault{p}{))} \PYGdefault{n}{TYPEI} \PYGdefault{o}{=} \PYGdefault{n+nb}{true}\PYGdefault{p}{;}
+				\PYGdefault{k}{else} \PYGdefault{n}{TYPEI} \PYGdefault{o}{=} \PYGdefault{n+nb}{false}\PYGdefault{p}{;}
+				\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC200}\PYGdefault{p}{,} \PYGdefault{n}{SRC200LEN}\PYGdefault{p}{);}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{c+c1}{// check MODE}
+			\PYGdefault{k}{else} \PYGdefault{n+nf}{if} \PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}MODE\PYGdefaultZdq{}}\PYGdefault{p}{))}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{n}{token} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{} \PYGdefaultZdq{}}\PYGdefault{p}{);}
+				\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}S\PYGdefaultZdq{}}\PYGdefault{p}{))} \PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC200}\PYGdefault{p}{,} \PYGdefault{n}{SRC200LEN}\PYGdefault{p}{);}
+				\PYGdefault{k}{else} \PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC504}\PYGdefault{p}{,} \PYGdefault{n}{SRC504LEN}\PYGdefault{p}{);}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{c+c1}{// check STRU}
+			\PYGdefault{k}{else} \PYGdefault{n+nf}{if} \PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}STRU\PYGdefaultZdq{}}\PYGdefault{p}{))}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{n}{token} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{(}\PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{} \PYGdefaultZdq{}}\PYGdefault{p}{);}
+				\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}F\PYGdefaultZdq{}}\PYGdefault{p}{))} \PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC200}\PYGdefault{p}{,} \PYGdefault{n}{SRC200LEN}\PYGdefault{p}{);}
+				\PYGdefault{k}{else} \PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC504}\PYGdefault{p}{,} \PYGdefault{n}{SRC504LEN}\PYGdefault{p}{);}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{c+c1}{// no operation}
+			\PYGdefault{k}{else} \PYGdefault{n+nf}{if} \PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}NOOP\PYGdefaultZdq{}}\PYGdefault{p}{))} \PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC200}\PYGdefault{p}{,} \PYGdefault{n}{SRC200LEN}\PYGdefault{p}{);}
+\end{Verbatim}

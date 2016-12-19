@@ -1,0 +1,28 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{c+cp}{\PYGdefaultZsh{}ifndef SHELL\PYGdefaultZus{}H}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define SHELL\PYGdefaultZus{}H}
+
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}stdio.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}unistd.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}stdlib.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}fcntl.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}sys/types.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}sys/stat.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}ctype.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}sys/wait.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}string.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}cstring\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}errno.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}vector\PYGdefaultZgt{}}
+\PYGdefault{k}{using} \PYGdefault{k}{namespace} \PYGdefault{n}{std}\PYGdefault{p}{;}
+
+\PYGdefault{k}{enum} \PYGdefault{n}{ParseState}\PYGdefault{p}{\PYGdefaultZob{}}\PYGdefault{n}{Start}\PYGdefault{p}{,} \PYGdefault{n}{CheckWord}\PYGdefault{p}{,} \PYGdefault{n}{CheckOperator}\PYGdefault{p}{,} \PYGdefault{n}{InputRedirection}\PYGdefault{p}{,} \PYGdefault{n}{OutputRedirection}\PYGdefault{p}{,} \PYGdefault{n}{ExecuteCommand}\PYGdefault{p}{\PYGdefaultZcb{};}
+\PYGdefault{k}{struct} \PYGdefault{n}{executable}\PYGdefault{p}{\PYGdefaultZob{}}\PYGdefault{k+kt}{char} \PYGdefault{o}{*} \PYGdefault{n}{command}\PYGdefault{p}{;} \PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{n}{args}\PYGdefault{p}{;\PYGdefaultZcb{};}
+\PYGdefault{k+kt}{bool} \PYGdefault{n+nf}{word}\PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{str}\PYGdefault{p}{);}
+\PYGdefault{k+kt}{int} \PYGdefault{n+nf}{lt\PYGdefaultZus{}gt}\PYGdefault{p}{(}\PYGdefault{k+kt}{char}\PYGdefault{o}{*} \PYGdefault{n}{str}\PYGdefault{p}{);}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{parse}\PYGdefault{p}{(}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{n}{list}\PYGdefault{p}{,} \PYGdefault{k+kt}{int} \PYGdefault{n}{single}\PYGdefault{p}{);}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{pipe\PYGdefaultZus{}recursion}\PYGdefault{p}{(}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{char}\PYGdefault{o}{*\PYGdefaultZgt{}} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{n}{vec}\PYGdefault{p}{,} \PYGdefault{k+kt}{int} \PYGdefault{n}{pipes}\PYGdefault{p}{[],} \PYGdefault{k+kt}{int} \PYGdefault{n}{size}\PYGdefault{p}{,} \PYGdefault{k+kt}{int} \PYGdefault{n}{input}\PYGdefault{p}{,} \PYGdefault{k+kt}{int} \PYGdefault{n}{output}\PYGdefault{p}{);}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{close\PYGdefaultZus{}pipes}\PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{pipes}\PYGdefault{p}{[]);}
+
+\PYGdefault{c+cp}{\PYGdefaultZsh{}endif}
+\end{Verbatim}

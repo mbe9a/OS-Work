@@ -1,0 +1,46 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{c+c1}{// Michael Eller mbe9a}
+\PYGdefault{c+c1}{// OS Machine Problem 2}
+\PYGdefault{c+c1}{// 29 Spetember 2016}
+\PYGdefault{c+c1}{// maximum\PYGdefaultZus{}finder.h}
+
+\PYGdefault{c+cp}{\PYGdefaultZsh{}ifndef MAXIMUM\PYGdefaultZus{}FINDER\PYGdefaultZus{}H}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}define MAXIMUM\PYGdefaultZus{}FINDER\PYGdefaultZus{}H}
+
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}stdio.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}math.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}stdlib.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}pthread.h\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZlt{}vector\PYGdefaultZgt{}}
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZdq{}barrier.h\PYGdefaultZdq{}}
+\PYGdefault{k}{using} \PYGdefault{k}{namespace} \PYGdefault{n}{std}\PYGdefault{p}{;}
+
+\PYGdefault{c+c1}{// struct used to hold information for individual threads}
+\PYGdefault{k}{struct} \PYGdefault{n}{pthread\PYGdefaultZus{}params}
+\PYGdefault{p}{\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// values hold the numbers to compare for the round}
+	\PYGdefault{k+kt}{int} \PYGdefault{n}{value\PYGdefaultZus{}1}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{int} \PYGdefault{n}{value\PYGdefaultZus{}2}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// max(value\PYGdefaultZus{}1, value\PYGdefaultZus{}2) goes in result}
+	\PYGdefault{k+kt}{int} \PYGdefault{n}{result}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// thread id, used for indexing}
+	\PYGdefault{k+kt}{int} \PYGdefault{n}{tid}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// total number of rounds to perform}
+	\PYGdefault{k+kt}{int} \PYGdefault{n}{rounds}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// 2D vector pointer for winners of each round}
+	\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{n}{vector}\PYGdefault{o}{\PYGdefaultZlt{}}\PYGdefault{k+kt}{int}\PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{o}{\PYGdefaultZgt{}*} \PYGdefault{n}{results}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// barrier pointer, sychronization object}
+	\PYGdefault{n}{Barrier}\PYGdefault{o}{*} \PYGdefault{n}{barrier}\PYGdefault{p}{;}
+\PYGdefault{p}{\PYGdefaultZcb{};}
+
+\PYGdefault{c+c1}{// thread function to calculate the higher of the}
+\PYGdefault{c+c1}{// two current values in the thread params struct}
+\PYGdefault{k+kt}{void}\PYGdefault{o}{*} \PYGdefault{n+nf}{find\PYGdefaultZus{}maximum} \PYGdefault{p}{(}\PYGdefault{k+kt}{void}\PYGdefault{o}{*} \PYGdefault{n}{input}\PYGdefault{p}{);}
+
+\PYGdefault{c+cp}{\PYGdefaultZsh{}endif}
+\end{Verbatim}

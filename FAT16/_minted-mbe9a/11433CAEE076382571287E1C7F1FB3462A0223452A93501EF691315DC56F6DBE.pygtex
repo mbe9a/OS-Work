@@ -1,0 +1,46 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{c+c1}{// read dir entries in single cluster (directory)}
+\PYGdefault{k+kt}{void} \PYGdefault{n+nf}{list\PYGdefaultZus{}directory}\PYGdefault{p}{()}
+\PYGdefault{p}{\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// start by reading in and saving the first sector of the active cluster}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{counter} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{first\PYGdefaultZus{}sector} \PYGdefault{o}{=} \PYGdefault{n}{first\PYGdefaultZus{}sector\PYGdefaultZus{}of\PYGdefaultZus{}cluster}\PYGdefault{p}{(}\PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{starting\PYGdefaultZus{}cluster}\PYGdefault{p}{,} \PYGdefault{n+nb}{false}\PYGdefault{p}{);}
+	\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{n}{first\PYGdefaultZus{}sector} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+	\PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{CURRENT}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{Fat16Entry}\PYGdefault{p}{));}
+
+	\PYGdefault{c+c1}{// keep listing as long as the first byte != 0}
+	\PYGdefault{k}{while} \PYGdefault{p}{(}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{// don\PYGdefaultZsq{}t print it if it\PYGdefaultZsq{}s a long file name or if it\PYGdefaultZsq{}s the volume ID}
+		\PYGdefault{k}{if} \PYGdefault{p}{((}\PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{attributes} \PYGdefault{o}{\PYGdefaultZam{}} \PYGdefault{n}{LFN}\PYGdefault{p}{)} \PYGdefault{o}{||} \PYGdefault{p}{(}\PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{attributes} \PYGdefault{o}{\PYGdefaultZam{}} \PYGdefault{n}{VOLUME\PYGdefaultZus{}ID}\PYGdefault{p}{))}
+		\PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{c+c1}{// read next entry}
+			\PYGdefault{n}{counter}\PYGdefault{o}{++}\PYGdefault{p}{;}
+			\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{p}{(}\PYGdefault{n}{first\PYGdefaultZus{}sector} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{)} \PYGdefault{o}{+} \PYGdefault{p}{(}\PYGdefault{n}{counter} \PYGdefault{o}{*} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{Fat16Entry}\PYGdefault{p}{)),} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+			\PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{CURRENT}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{Fat16Entry}\PYGdefault{p}{));}
+			\PYGdefault{k}{continue}\PYGdefault{p}{;}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{k}{else}
+		\PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{c+c1}{// get the filename}
+			\PYGdefault{c+c1}{// initialize with max possible size}
+			\PYGdefault{k+kt}{char} \PYGdefault{n}{name}\PYGdefault{p}{[}\PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{filename}\PYGdefault{p}{)} \PYGdefault{o}{+} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{ext}\PYGdefault{p}{)} \PYGdefault{o}{+} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{];}
+			\PYGdefault{n}{get\PYGdefaultZus{}filename}\PYGdefault{p}{(}\PYGdefault{n}{name}\PYGdefault{p}{);}
+
+			\PYGdefault{c+c1}{// display the name}
+			\PYGdefault{n}{cout} \PYGdefault{o}{\PYGdefaultZlt{}\PYGdefaultZlt{}} \PYGdefault{n}{name} \PYGdefault{o}{\PYGdefaultZlt{}\PYGdefaultZlt{}} \PYGdefault{n}{endl}\PYGdefault{p}{;}
+
+			\PYGdefault{c+c1}{// read the next entry}
+			\PYGdefault{n}{counter}\PYGdefault{o}{++}\PYGdefault{p}{;}
+			\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{p}{(}\PYGdefault{n}{first\PYGdefaultZus{}sector} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{)} \PYGdefault{o}{+} \PYGdefault{p}{(}\PYGdefault{n}{counter} \PYGdefault{o}{*} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{Fat16Entry}\PYGdefault{p}{)),} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+			\PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{CURRENT}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{Fat16Entry}\PYGdefault{p}{));}
+
+			\PYGdefault{c+c1}{// break if the first byte is 0}
+			\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{filename}\PYGdefault{p}{[}\PYGdefault{l+m+mi}{0}\PYGdefault{p}{]} \PYGdefault{o}{==} \PYGdefault{l+m+mh}{0x00}\PYGdefault{p}{)} \PYGdefault{k}{break}\PYGdefault{p}{;}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{c+c1}{// return to the first sector}
+	\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{n}{first\PYGdefaultZus{}sector} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+	\PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{CURRENT}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{Fat16Entry}\PYGdefault{p}{));}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+\end{Verbatim}

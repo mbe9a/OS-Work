@@ -1,0 +1,58 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{c+c1}{// Michael Eller mbe9a}
+\PYGdefault{c+c1}{// OS Machine Problem 3}
+\PYGdefault{c+c1}{// 22 November 2016}
+\PYGdefault{c+c1}{// file\PYGdefaultZus{}manager.cpp (main)}
+
+\PYGdefault{c+cp}{\PYGdefaultZsh{}include} \PYGdefault{c+cpf}{\PYGdefaultZdq{}file\PYGdefaultZus{}manager.h\PYGdefaultZdq{}}
+
+\PYGdefault{c+c1}{// some globals}
+\PYGdefault{c+c1}{// holds the boot sector of the disk}
+\PYGdefault{n}{Fat16BootSector} \PYGdefault{n}{BS}\PYGdefault{p}{;}
+
+\PYGdefault{c+c1}{// track state/position of file system}
+\PYGdefault{n}{Fat16Entry} \PYGdefault{n}{CURRENT}\PYGdefault{p}{;}
+
+\PYGdefault{c+c1}{// maintain the current path to display for user}
+\PYGdefault{n}{string} \PYGdefault{n}{PWD}\PYGdefault{p}{;}
+
+\PYGdefault{c+c1}{// entire volume}
+\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{DISK}\PYGdefault{p}{;}
+
+\PYGdefault{c+c1}{// where data starts on the disk}
+\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{first\PYGdefaultZus{}data\PYGdefaultZus{}sector}\PYGdefault{p}{;}
+
+\PYGdefault{c+c1}{// first root directory sector, root sector is treated differently}
+\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{first\PYGdefaultZus{}root\PYGdefaultZus{}dir\PYGdefaultZus{}sector}\PYGdefault{p}{;}
+
+\PYGdefault{c+c1}{// are you in the root directory?}
+\PYGdefault{k+kt}{bool} \PYGdefault{n}{root}\PYGdefault{p}{;}
+
+\PYGdefault{c+c1}{// function to retrieve the FAT value at the active cluster (is it the last cluster in the chain?)}
+\PYGdefault{k+kt}{bool} \PYGdefault{n+nf}{get\PYGdefaultZus{}fat\PYGdefaultZus{}value}\PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short}\PYGdefault{o}{*} \PYGdefault{n}{value}\PYGdefault{p}{,} \PYGdefault{k+kt}{bool} \PYGdefault{n}{first\PYGdefaultZus{}cluster}\PYGdefault{p}{,} \PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{active\PYGdefaultZus{}cluster}\PYGdefault{p}{)}
+\PYGdefault{p}{\PYGdefaultZob{}}
+	\PYGdefault{c+c1}{// save current location}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{int} \PYGdefault{n}{location} \PYGdefault{o}{=} \PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}CUR}\PYGdefault{p}{);}
+
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{char} \PYGdefault{n}{FAT\PYGdefaultZus{}table}\PYGdefault{p}{[}\PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{];}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{fat\PYGdefaultZus{}offset}\PYGdefault{p}{;}
+	\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{first\PYGdefaultZus{}cluster}\PYGdefault{p}{)} \PYGdefault{n}{fat\PYGdefaultZus{}offset} \PYGdefault{o}{=} \PYGdefault{n}{CURRENT}\PYGdefault{p}{.}\PYGdefault{n}{starting\PYGdefaultZus{}cluster} \PYGdefault{o}{*} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{;}
+	\PYGdefault{k}{else} \PYGdefault{n}{fat\PYGdefaultZus{}offset} \PYGdefault{o}{=} \PYGdefault{n}{active\PYGdefaultZus{}cluster} \PYGdefault{o}{*} \PYGdefault{l+m+mi}{2}\PYGdefault{p}{;}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{fat\PYGdefaultZus{}sector} \PYGdefault{o}{=} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{reserved\PYGdefaultZus{}sectors} \PYGdefault{o}{+} \PYGdefault{p}{(}\PYGdefault{n}{fat\PYGdefaultZus{}offset} \PYGdefault{o}{/} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{);}
+	\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short} \PYGdefault{n}{ent\PYGdefaultZus{}offset} \PYGdefault{o}{=} \PYGdefault{n}{fat\PYGdefaultZus{}offset} \PYGdefault{o}{\PYGdefaultZpc{}} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// put the fat\PYGdefaultZus{}sector into FAT\PYGdefaultZus{}table}
+	\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{n}{fat\PYGdefaultZus{}sector} \PYGdefault{o}{*} \PYGdefault{n}{BS}\PYGdefault{p}{.}\PYGdefault{n}{sector\PYGdefaultZus{}size}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+	\PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{FAT\PYGdefaultZus{}table}\PYGdefault{p}{,} \PYGdefault{k}{sizeof}\PYGdefault{p}{(}\PYGdefault{n}{FAT\PYGdefaultZus{}table}\PYGdefault{p}{));}
+	\PYGdefault{o}{*}\PYGdefault{n}{value} \PYGdefault{o}{=} \PYGdefault{o}{*}\PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned} \PYGdefault{k+kt}{short}\PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{FAT\PYGdefaultZus{}table}\PYGdefault{p}{[}\PYGdefault{n}{ent\PYGdefaultZus{}offset}\PYGdefault{p}{];}
+
+	\PYGdefault{c+c1}{// return to original location}
+	\PYGdefault{n}{lseek}\PYGdefault{p}{(}\PYGdefault{n}{DISK}\PYGdefault{p}{,} \PYGdefault{n}{location}\PYGdefault{p}{,} \PYGdefault{n}{SEEK\PYGdefaultZus{}SET}\PYGdefault{p}{);}
+
+	\PYGdefault{c+c1}{// check if there are chained clusters}
+	\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{o}{*}\PYGdefault{n}{value} \PYGdefault{o}{\PYGdefaultZgt{}=} \PYGdefault{l+m+mh}{0xFFF8}\PYGdefault{p}{)} \PYGdefault{k}{return} \PYGdefault{n+nb}{false}\PYGdefault{p}{;}
+
+	\PYGdefault{c+c1}{// not accounting for bad clusters here}
+	\PYGdefault{k}{return} \PYGdefault{n+nb}{true}\PYGdefault{p}{;}
+\PYGdefault{p}{\PYGdefaultZcb{}}
+\end{Verbatim}

@@ -1,0 +1,61 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYGdefault{c+c1}{// check and see if they were initialized correctly}
+	\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}control\PYGdefaultZus{}fd} \PYGdefault{o}{==} \PYGdefault{o}{\PYGdefaultZhy{}}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{n}{perror}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}cannot create socket\PYGdefaultZdq{}}\PYGdefault{p}{);}
+		\PYGdefault{n}{exit}\PYGdefault{p}{(}\PYGdefault{n}{EXIT\PYGdefaultZus{}FAILURE}\PYGdefault{p}{);}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{c+c1}{// bind and the control socket to the control address struct, check if unsuccessful}
+	\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{bind}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}control\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{p}{(}\PYGdefault{k}{struct} \PYGdefault{n}{sockaddr} \PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{control\PYGdefaultZus{}addr}\PYGdefault{p}{,} \PYGdefault{k}{sizeof} \PYGdefault{n}{control\PYGdefaultZus{}addr}\PYGdefault{p}{)} \PYGdefault{o}{==} \PYGdefault{o}{\PYGdefaultZhy{}}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{n}{perror}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}control bind failed\PYGdefaultZdq{}}\PYGdefault{p}{);}
+		\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}control\PYGdefaultZus{}fd}\PYGdefault{p}{);}
+		\PYGdefault{n}{exit}\PYGdefault{p}{(}\PYGdefault{n}{EXIT\PYGdefaultZus{}FAILURE}\PYGdefault{p}{);}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+	\PYGdefault{c+c1}{// listen on the control socket, check if unsuccessful}
+	\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{listen}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}control\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{1}\PYGdefault{p}{)} \PYGdefault{o}{==} \PYGdefault{o}{\PYGdefaultZhy{}}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{n}{perror}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}control listen failed\PYGdefaultZdq{}}\PYGdefault{p}{);}
+		\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}control\PYGdefaultZus{}fd}\PYGdefault{p}{);}
+		\PYGdefault{n}{exit}\PYGdefault{p}{(}\PYGdefault{n}{EXIT\PYGdefaultZus{}FAILURE}\PYGdefault{p}{);}
+	\PYGdefault{p}{\PYGdefaultZcb{}}
+
+	\PYGdefault{c+c1}{// outer loop, this enables multiple sessions (consecutively not simultaneously)}
+	\PYGdefault{k}{while} \PYGdefault{p}{(}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{)}
+	\PYGdefault{p}{\PYGdefaultZob{}}
+		\PYGdefault{c+c1}{// accept the control connection, check if unsuccessful}
+		\PYGdefault{k+kt}{int} \PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd} \PYGdefault{o}{=} \PYGdefault{n}{accept}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}control\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n+nb}{NULL}\PYGdefault{p}{,} \PYGdefault{n+nb}{NULL}\PYGdefault{p}{);}
+		\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)}
+		\PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{n}{perror}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}control accept failed\PYGdefaultZdq{}}\PYGdefault{p}{);}
+			\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}control\PYGdefaultZus{}fd}\PYGdefault{p}{);}
+			\PYGdefault{n}{exit}\PYGdefault{p}{(}\PYGdefault{n}{EXIT\PYGdefaultZus{}FAILURE}\PYGdefault{p}{);}
+		\PYGdefault{p}{\PYGdefaultZcb{}}
+		\PYGdefault{c+c1}{// return code 220 \PYGdefaultZhy{} service ready for new user}
+		\PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC220}\PYGdefault{p}{,} \PYGdefault{n}{SRC220LEN}\PYGdefault{p}{);}
+
+		\PYGdefault{c+c1}{// inner loop \PYGdefaultZhy{} service current session}
+		\PYGdefault{k}{while}\PYGdefault{p}{(}\PYGdefault{l+m+mi}{1}\PYGdefault{p}{)}
+		\PYGdefault{p}{\PYGdefaultZob{}}
+			\PYGdefault{c+c1}{// get command from client}
+			\PYGdefault{n}{command} \PYGdefault{o}{=} \PYGdefault{n}{read}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{o}{\PYGdefaultZam{}}\PYGdefault{n}{buffer}\PYGdefault{p}{,} \PYGdefault{l+m+mi}{100}\PYGdefault{p}{);}
+			\PYGdefault{k}{if} \PYGdefault{p}{(}\PYGdefault{n}{command} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{)}
+			\PYGdefault{p}{\PYGdefaultZob{}}
+				\PYGdefault{n}{perror}\PYGdefault{p}{(}\PYGdefault{l+s}{\PYGdefaultZdq{}receive on control socket failed\PYGdefaultZdq{}}\PYGdefault{p}{);}
+				\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{);}
+				\PYGdefault{n}{close}\PYGdefault{p}{(}\PYGdefault{n}{socket\PYGdefaultZus{}control\PYGdefaultZus{}fd}\PYGdefault{p}{);}
+				\PYGdefault{n}{exit}\PYGdefault{p}{(}\PYGdefault{n}{EXIT\PYGdefaultZus{}FAILURE}\PYGdefault{p}{);}
+			\PYGdefault{p}{\PYGdefaultZcb{}}
+			\PYGdefault{c+c1}{// ignore carriage returns and new line characters}
+			\PYGdefault{k}{for} \PYGdefault{p}{(}\PYGdefault{k+kt}{int} \PYGdefault{n}{x} \PYGdefault{o}{=} \PYGdefault{l+m+mi}{0}\PYGdefault{p}{;} \PYGdefault{p}{(}\PYGdefault{k+kt}{unsigned}\PYGdefault{p}{)}\PYGdefault{n}{x} \PYGdefault{o}{\PYGdefaultZlt{}} \PYGdefault{n}{strlen}\PYGdefault{p}{(}\PYGdefault{n}{buffer}\PYGdefault{p}{);} \PYGdefault{n}{x}\PYGdefault{o}{++}\PYGdefault{p}{)}
+				\PYGdefault{k}{if} \PYGdefault{p}{(} \PYGdefault{n}{buffer}\PYGdefault{p}{[}\PYGdefault{n}{x}\PYGdefault{p}{]} \PYGdefault{o}{==} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}n\PYGdefaultZsq{}} \PYGdefault{o}{||} \PYGdefault{n}{buffer}\PYGdefault{p}{[}\PYGdefault{n}{x}\PYGdefault{p}{]} \PYGdefault{o}{==} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}r\PYGdefaultZsq{}} \PYGdefault{p}{)} \PYGdefault{n}{buffer}\PYGdefault{p}{[}\PYGdefault{n}{x}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZbs{}0\PYGdefaultZsq{}}\PYGdefault{p}{;}
+			\PYGdefault{n}{cout} \PYGdefault{o}{\PYGdefaultZlt{}\PYGdefaultZlt{}} \PYGdefault{n}{buffer} \PYGdefault{o}{\PYGdefaultZlt{}\PYGdefaultZlt{}} \PYGdefault{n}{endl}\PYGdefault{p}{;}
+			\PYGdefault{c+c1}{// split on spaces}
+			\PYGdefault{n}{token} \PYGdefault{o}{=} \PYGdefault{n}{strtok}\PYGdefault{p}{((}\PYGdefault{k+kt}{char}\PYGdefault{o}{*}\PYGdefault{p}{)}\PYGdefault{n}{buffer}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{} \PYGdefaultZdq{}}\PYGdefault{p}{);}
+
+			\PYGdefault{c+c1}{// quit session if command is exit}
+			\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}QUIT\PYGdefaultZdq{}}\PYGdefault{p}{))} \PYGdefault{k}{break}\PYGdefault{p}{;}
+
+			\PYGdefault{c+c1}{// return 200 if USER is received, shouldn\PYGdefaultZsq{}t happen but here just in case}
+			\PYGdefault{k}{if}\PYGdefault{p}{(}\PYGdefault{o}{!}\PYGdefault{n}{strcmp}\PYGdefault{p}{(}\PYGdefault{n}{token}\PYGdefault{p}{,} \PYGdefault{l+s}{\PYGdefaultZdq{}USER\PYGdefaultZdq{}}\PYGdefault{p}{))} \PYGdefault{n}{write}\PYGdefault{p}{(}\PYGdefault{n}{control\PYGdefaultZus{}connection\PYGdefaultZus{}fd}\PYGdefault{p}{,} \PYGdefault{n}{SRC200}\PYGdefault{p}{,} \PYGdefault{n}{SRC200LEN}\PYGdefault{p}{);}
+\end{Verbatim}
